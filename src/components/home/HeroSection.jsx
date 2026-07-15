@@ -55,7 +55,7 @@ function HeroSection() {
 
         {/* Hero Banner */}
         <div className="relative bg-black text-white rounded-lg overflow-hidden order-1 lg:order-2 lg:col-span-3">
-          <div className="relative h-[300px] sm:h-[400px] lg:h-[500px]">
+          <div className="relative h-75 sm:h-100 lg:h-125">
             {/* Content */}
             <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12">
               <div className="max-w-md z-10">
@@ -91,7 +91,7 @@ function HeroSection() {
                 <img
                   src="/images/iphone.png"
                   alt="iPhone 14"
-                  className="absolute inset-0 w-full h-full object-contain object-right-bottom"
+                  className="absolute inset-0 w-full h-full object-contain object-bottom-right"
                 />
               </div>
             </div>
