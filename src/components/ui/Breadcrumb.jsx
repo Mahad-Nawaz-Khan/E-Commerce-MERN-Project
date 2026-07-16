@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ChevronRight } from 'lucide-react'
+import { Breadcrumb as AntBreadcrumb } from 'antd'
+import { RightOutlined } from '@ant-design/icons'
 
 /**
  * Breadcrumb — extracted from the repeated Home › Page markup on every
@@ -10,25 +11,20 @@ import { ChevronRight } from 'lucide-react'
  */
 function Breadcrumb({ crumbs = [], className = '' }) {
   return (
-    <nav className={`flex items-center gap-2 py-3.5 text-sm ${className}`}>
-      {crumbs.map((crumb, index) => {
-        const isLast = index === crumbs.length - 1
-        return (
-          <span key={crumb.label} className="flex items-center gap-2">
-            {crumb.to && !isLast ? (
-              <Link
-                to={crumb.to}
-                className="text-[#666666] hover:text-black transition-colors"
-              >
+    <nav className={`py-3.5 text-sm ${className}`}>
+      <AntBreadcrumb
+        separator={<RightOutlined className="!text-xs !text-[#666666]" />}
+        items={crumbs.map((crumb, index) => ({
+          title:
+            crumb.to && index < crumbs.length - 1 ? (
+              <Link to={crumb.to} className="text-[#666666] hover:text-black transition-colors">
                 {crumb.label}
               </Link>
             ) : (
               <span>{crumb.label}</span>
-            )}
-            {!isLast && <ChevronRight className="w-4 h-4 text-[#666666]" />}
-          </span>
-        )
-      })}
+            ),
+        }))}
+      />
     </nav>
   )
 }

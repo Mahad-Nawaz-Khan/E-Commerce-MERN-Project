@@ -1,5 +1,5 @@
 import { Calendar, DollarSign, ShoppingBag, Wallet } from 'lucide-react'
-import { inter, poppins } from '@/lib/fonts'
+import { inter, poppins } from '../../lib/fonts'
 
 const stats = [
   { icon: Calendar, number: '10.5k', label: 'Sellers active our site', highlight: false },
@@ -29,7 +29,7 @@ function SiteStats() {
               >
                 <Icon className={`w-8 h-8 ${stat.highlight ? 'text-white' : 'text-black'}`} />
               </div>
-              <div className={`text-[32px] font-semibold mb-1 ${inter.className}`}>
+              <div className={`text-8 font-semibold mb-1 ${inter.className}`}>
                 {stat.number}
               </div>
               <div className={`text-base ${poppins.className}`}>{stat.label}</div>

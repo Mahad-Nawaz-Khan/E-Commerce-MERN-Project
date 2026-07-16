@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ChevronLeft,
@@ -9,7 +10,7 @@ import {
   Headphones,
   Gamepad,
 } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '../ui/Button'
 
 const categories = [
   { name: 'Phones', icon: Smartphone, active: false },
@@ -21,39 +22,51 @@ const categories = [
 ]
 
 function BrowseCategories() {
+  const [offset, setOffset] = useState(0)
+  const visibleCategories = [...categories.slice(offset), ...categories.slice(0, offset)]
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="flex flex-col gap-4 sm:gap-6">
+    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16">
+      <div className="flex flex-col gap-7">
         {/* Header Section */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-[#DB4444] rounded-[4px]" />
+              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-[#DB4444] rounded-sm" />
               <span className="text-[#DB4444] text-sm sm:text-base font-semibold">
                 Categories
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-semibold">Browse By Category</h2>
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-[0.04em]">Browse By Category</h2>
           </div>
           <div className="flex gap-2 sm:gap-4">
-            <Button variant="outline" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-[#00000066]">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]"
+              onClick={() => setOffset((value) => (value - 1 + categories.length) % categories.length)}
+            >
               <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
-            <Button variant="outline" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-[#00000066]">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]"
+              onClick={() => setOffset((value) => (value + 1) % categories.length)}
+            >
               <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </div>
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-[30px]">
-          {categories.map((category) => {
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-7.5">
+          {visibleCategories.map((category) => {
             const Icon = category.icon
             return (
               <Link
                 key={category.name}
-                to="/"
-                className={`flex flex-col items-center justify-center p-6 sm:p-8 border rounded-[4px] hover:bg-[#DB4444] hover:text-white transition-colors cursor-pointer group ${
+                to={`/shop?category=${encodeURIComponent(category.name)}`}
+                className={`flex min-h-36.25 flex-col items-center justify-center p-5 border rounded-sm hover:bg-[#DB4444] hover:text-white transition-colors cursor-pointer group ${
                   category.active ? 'bg-[#DB4444] text-white' : ''
                 }`}
               >

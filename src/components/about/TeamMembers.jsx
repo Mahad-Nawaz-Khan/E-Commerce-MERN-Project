@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Linkedin, Instagram, Twitter } from '@/components/ui/SocialIcons'
-import { inter, poppins } from '@/lib/fonts'
+import { Linkedin, Instagram, Twitter } from '../ui/SocialIcons'
+import { inter, poppins } from '../../lib/fonts'
 
 const teamMembers = [
   {
@@ -30,14 +30,14 @@ function TeamMembers() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {teamMembers.map((member) => (
           <div key={member.name} className="bg-[#F5F5F5] p-8 flex flex-col items-center text-center">
-            <div className="relative w-full h-[300px] mb-8">
+            <div className="relative w-full h-75 mb-8">
               <img
                 src={member.image}
                 alt={member.name}
                 className="absolute inset-0 w-full h-full object-contain"
               />
             </div>
-            <h3 className={`${poppins.className} text-[32px] font-medium mb-2`}>
+            <h3 className={`${poppins.className} text-8 font-medium mb-2`}>
               {member.name}
             </h3>
             <p className={`${inter.className} text-base text-[#666666] mb-6`}>

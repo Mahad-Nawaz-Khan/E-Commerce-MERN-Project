@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Eye, Trash2 } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { StarRating } from '@/components/ui/StarRating'
-import { inter, poppins } from '@/lib/fonts'
-import { useWishlist } from '@/hooks/useWishlist'
-import { useCart } from '@/hooks/useCart'
-import { useProducts } from '@/hooks/useProducts'
+import { Button } from '../components/ui/Button'
+import { StarRating } from '../components/ui/StarRating'
+import { inter, poppins } from '../lib/fonts'
+import { useWishlist } from '../hooks/useWishlist'
+import { useCart } from '../hooks/useCart'
+import { useProducts } from '../hooks/useProducts'
 import toast from 'react-hot-toast'
 
 /**
@@ -19,8 +19,8 @@ function WishlistCard({ item, isWishlistItem = false, onRemove, onAddToCart }) {
   const isNew = !isWishlistItem && item.tags?.includes('new')
 
   return (
-    <div className="group">
-      <div className="relative aspect-square bg-[#F5F5F5] rounded-sm mb-4">
+    <article className="group flex w-full aspect-27/35 flex-col lg:w-67.5 lg:h-87.5">
+      <div className="relative h-[71.428571%] shrink-0 bg-[#F5F5F5] rounded-sm">
         {hasDiscount && (
           <span className="absolute top-3 left-3 bg-[#DB4444] text-white text-xs px-3 py-1 rounded-sm">
             -{Math.round((1 - item.price / item.originalPrice) * 100)}%
@@ -68,21 +68,23 @@ function WishlistCard({ item, isWishlistItem = false, onRemove, onAddToCart }) {
         </div>
       </div>
 
-      <h3 className="font-medium mb-2">{item.name}</h3>
-      <div className="flex gap-3 mb-2">
-        <span className="text-[#DB4444] font-medium">${item.price}</span>
-        {hasDiscount && (
-          <span className="text-[#666666] line-through">${item.originalPrice}</span>
+      <div className="flex min-h-0 flex-1 flex-col pt-3">
+        <h3 className="line-clamp-1 font-medium mb-2">{item.name}</h3>
+        <div className="flex gap-3 mb-2">
+          <span className="text-[#DB4444] font-medium">${item.price}</span>
+          {hasDiscount && (
+            <span className="text-[#666666] line-through">${item.originalPrice}</span>
+          )}
+        </div>
+
+        {!isWishlistItem && (
+          <div className="flex items-center gap-2">
+            <StarRating rating={item.rating} />
+            <span className="text-sm text-[#666666]">({item.reviews})</span>
+          </div>
         )}
       </div>
-
-      {!isWishlistItem && (
-        <div className="flex items-center gap-2">
-          <StarRating rating={item.rating} />
-          <span className="text-sm text-[#666666]">({item.reviews})</span>
-        </div>
-      )}
-    </div>
+    </article>
   )
 }
 
@@ -128,7 +130,7 @@ function WishlistScreen() {
 
         {/* Wishlist Grid */}
         {wishlist.count > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-7.5 lg:justify-items-start mb-20">
             {wishlist.items.map((item) => (
               <WishlistCard
                 key={item.id}
@@ -161,7 +163,7 @@ function WishlistScreen() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-7.5 lg:justify-items-start">
             {recommended.map((item) => (
               <WishlistCard
                 key={item.id}

@@ -1,10 +1,10 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { Minus, Plus, X } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
-import { inter, poppins } from '@/lib/fonts'
-import { useCart } from '@/hooks/useCart'
+import { Button } from '../components/ui/Button'
+import { Input } from '../components/ui/Input'
+import { Breadcrumb } from '../components/ui/Breadcrumb'
+import { inter, poppins } from '../lib/fonts'
+import { useCart } from '../hooks/useCart'
 
 /** Cart route — table of cart items with quantity steppers + cart total. */
 function CartScreen() {
@@ -38,7 +38,7 @@ function CartScreen() {
           <>
             {/* Cart Table */}
             <div className="mb-8 overflow-x-auto">
-              <div className="min-w-[600px]">
+              <div className="min-w-150">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 pb-6 border-b text-sm font-medium">
                   <div>Product</div>
                   <div>Price</div>
@@ -70,7 +70,7 @@ function CartScreen() {
                       <span className="font-medium text-sm sm:text-base">{item.name}</span>
                     </div>
                     <div className="text-sm sm:text-base">${item.price}</div>
-                    <div className="flex items-center border rounded-sm max-w-[72px]">
+                    <div className="flex items-center border rounded-sm max-w-18">
                       <button
                         className="p-1 sm:p-2 hover:bg-gray-50"
                         onClick={() => cart.decrement(item.id)}
@@ -117,14 +117,14 @@ function CartScreen() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Input
                   placeholder="Coupon Code"
-                  className="h-10 sm:h-12 w-full sm:max-w-[300px] rounded-sm border-gray-300 focus:border-gray-400 focus:ring-0"
+                  className="h-10 sm:h-12 w-full sm:max-w-75 rounded-sm border-gray-300 focus:border-gray-400 focus:ring-0"
                 />
                 <Button className="h-10 sm:h-12 px-6 sm:px-8 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm w-full sm:w-auto">
                   Apply Coupon
                 </Button>
               </div>
 
-              <div className="border rounded-sm p-4 sm:p-6 space-y-4 w-full lg:max-w-[470px] lg:ml-auto">
+              <div className="border rounded-sm p-4 sm:p-6 space-y-4 w-full lg:max-w-117.5 lg:ml-auto">
                 <h2 className={`${poppins.className} text-lg sm:text-xl font-medium mb-4`}>
                   Cart Total
                 </h2>

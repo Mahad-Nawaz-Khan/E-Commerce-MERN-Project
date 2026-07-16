@@ -5,7 +5,7 @@
  * font utilities wired to @fontsource (see src/index.css + main.jsx imports).
  *
  * Usage stays identical to the source project:
- *   import { inter, poppins } from '@/lib/fonts'
+ *   import { inter, poppins } from '../lib/fonts'
  *   <h1 className={`${poppins.className} ...`}>...</h1>
  */
 export const inter = { className: 'font-inter' }
