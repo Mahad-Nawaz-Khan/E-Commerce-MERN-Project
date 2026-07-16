@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/Button'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
+import { Button } from '../components/ui/Button'
+import { Breadcrumb } from '../components/ui/Breadcrumb'
 
 /** 404 page — breadcrumb + centered "404 Not Found" + back-home CTA. */
 function NotFoundScreen() {

@@ -1,21 +1,24 @@
 import { useMemo } from 'react'
 import {
-  products,
-  getProductsByTag,
-} from '@/data/products'
+  getProductSummaries,
+  getProductSummariesByTag,
+} from '../data/products'
 
 /**
- * Static product data hook — replaces the Sanity GROQ queries used in the
- * original project (allProductsQuery, todaysDealProductsQuery, bestsellerProductsQuery).
- * Computed once via useMemo since the data is static.
+ * Static product summary hook for product-card grids (Flash Sales, Best
+ * Sellers, Explore, Wishlist "Just For You", Shop). Returns only the fields a
+ * card needs (id, name, slug, image, price, originalPrice, rating, reviews,
+ * category, tags) so grids don't carry full detail-page payloads.
+ *
+ * Product detail screens should use `useProduct` instead.
  */
 export function useProducts() {
   return useMemo(
     () => ({
-      all: products,
-      todaysDeals: getProductsByTag('todays-deal'),
-      bestsellers: getProductsByTag('bestseller'),
-      featured: getProductsByTag('featured'),
+      all: getProductSummaries(),
+      todaysDeals: getProductSummariesByTag('todays-deal'),
+      bestsellers: getProductSummariesByTag('bestseller'),
+      featured: getProductSummariesByTag('featured'),
     }),
     [],
   )

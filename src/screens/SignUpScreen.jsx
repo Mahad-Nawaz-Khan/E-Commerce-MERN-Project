@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/Button'
-import { InputUnderline } from '@/components/ui/InputUnderline'
-import { inter } from '@/lib/fonts'
+import { Button } from '../components/ui/Button'
+import { InputUnderline } from '../components/ui/InputUnderline'
+import { inter } from '../lib/fonts'
 
 /** Sign-up route — split layout: promo image left, create-account form right. */
 function SignUpScreen() {
@@ -20,28 +20,28 @@ function SignUpScreen() {
 
       {/* Right Side - Form */}
       <div className="flex items-center justify-center p-6 lg:p-12">
-        <div className="w-full max-w-[370px] space-y-8">
+        <div className="w-full max-w-92.5 space-y-8">
           <div className="space-y-3">
-            <h1 className="text-[34px] font-medium tracking-tight">Create an account</h1>
+            <h1 className="text-8.5 font-medium tracking-tight">Create an account</h1>
             <p className="text-base text-gray-600">Enter your details below</p>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
             <InputUnderline label="Name" />
             <InputUnderline label="Email or Phone Number" />
             <InputUnderline type="password" label="Password" />
             <Button
               type="submit"
-              className="w-full h-[56px] bg-[#DB4444] hover:bg-[#DB4444]/90 rounded font-medium text-base"
+              className="h-12! w-full! rounded-sm! bg-[#DB4444]! text-base! text-white! font-normal! hover:bg-[#c73838]!"
             >
               Create Account
             </Button>
             <Button
               type="button"
               variant="outline"
-              className="w-full h-[56px] rounded font-medium border-gray-300 hover:bg-gray-50"
+              className="h-12! w-full! rounded-sm! border-[#999]! bg-white! text-base! font-normal! text-black! shadow-none! hover:border-black! hover:bg-white!"
             >
-              <img src="/images/logos/google.svg" alt="Google" className="mr-2" />
+              <img src="/images/logos/google.svg" alt="Google" className="mr-2 h-4 w-4" />
               Sign up with Google
             </Button>
           </form>

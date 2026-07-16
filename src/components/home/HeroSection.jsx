@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
-import { poppins, inter } from '@/lib/fonts'
+import { poppins, inter } from '../../lib/fonts'
 
 const categories = [
   "Woman's Fashion",
@@ -20,10 +20,10 @@ function HeroSection() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 pt-6 sm:pt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-[195px_1fr] gap-0">
         {/* Categories Sidebar */}
-        <div className="bg-white lg:border-r order-2 lg:order-1 lg:col-span-1">
+        <div className="bg-white lg:border-r lg:border-[#e5e5e5] order-2 lg:order-1">
           <div className="flex lg:hidden justify-between items-center py-4 border-b">
             <h2 className="font-semibold">Categories</h2>
             <button
@@ -34,16 +34,16 @@ function HeroSection() {
             </button>
           </div>
           <nav
-            className={`space-y-4 py-4 ${
+            className={`space-y-1 py-4 lg:pr-4 ${
               isMobileMenuOpen ? 'block' : 'hidden lg:block'
             }`}
           >
             {categories.map((category, index) => (
               <Link
                 key={category}
-                to="/"
+                to={`/shop?category=${encodeURIComponent(category)}`}
                 className={`flex items-center justify-between text-sm hover:text-gray-600 py-2 px-4 lg:px-0 ${
-                  index < 2 ? 'font-semibold' : ''
+                  ''
                 }`}
               >
                 {category}
@@ -54,13 +54,13 @@ function HeroSection() {
         </div>
 
         {/* Hero Banner */}
-        <div className="relative bg-black text-white rounded-lg overflow-hidden order-1 lg:order-2 lg:col-span-3">
-          <div className="relative h-[300px] sm:h-[400px] lg:h-[500px]">
+        <div className="relative bg-black text-white overflow-hidden order-1 lg:order-2 lg:ml-11">
+          <div className="relative h-75 sm:h-90 lg:h-86">
             {/* Content */}
-            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12">
-              <div className="max-w-md z-10">
+            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 lg:p-16">
+              <div className="max-w-67.5 z-10">
                 <h1
-                  className={`${poppins.className} text-xl sm:text-2xl mb-4 flex items-center gap-4`}
+                  className={`${poppins.className} text-sm mb-5 flex items-center gap-2`}
                 >
                   <img
                     src="/images/logos/apple.svg"
@@ -72,14 +72,14 @@ function HeroSection() {
                   <span>iPhone 14 Series</span>
                 </h1>
                 <p
-                  className={`${inter.className} text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 flex flex-col gap-2 sm:gap-3`}
+                  className={`${inter.className} text-3xl sm:text-4xl lg:text-12 leading-[1.2] font-semibold tracking-[0.04em] mb-6 flex flex-col gap-1`}
                 >
                   <span>Up to 10%</span>
                   <span>off Voucher</span>
                 </p>
                 <Link
-                  to="/"
-                  className={`${inter.className} inline-flex items-center text-sm font-semibold hover:underline`}
+                  to="/shop"
+                  className={`${inter.className} inline-flex items-center gap-2 text-sm font-medium underline underline-offset-5`}
                 >
                   Shop Now
                   <ChevronRight className="w-4 h-4 ml-1" />
@@ -87,24 +87,24 @@ function HeroSection() {
               </div>
 
               {/* Product Image */}
-              <div className="absolute right-0 bottom-0 w-[60%] h-[70%] sm:h-[80%] lg:h-full">
+              <div className="absolute right-0 bottom-0 w-[60%] h-[70%] sm:h-[80%] lg:w-[58%] lg:h-full">
                 <img
                   src="/images/iphone.png"
                   alt="iPhone 14"
-                  className="absolute inset-0 w-full h-full object-contain object-right-bottom"
+                  className="absolute inset-0 w-full h-full object-contain object-bottom-right"
                 />
               </div>
             </div>
           </div>
 
           {/* Navigation Dots */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {[0, 1, 2, 3, 4].map((index) => (
               <button
                 key={index}
                 onClick={() => setActiveSlide(index)}
                 className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${
-                  activeSlide === index ? 'bg-white' : 'bg-gray-400/50'
+                  activeSlide === index ? 'bg-[#DB4444] ring-2 ring-white' : 'bg-[#808080]'
                 }`}
               >
                 <span className="sr-only">Slide {index + 1}</span>
@@ -113,7 +113,7 @@ function HeroSection() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

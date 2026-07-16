@@ -1,8 +1,8 @@
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
-import { Button } from '@/components/ui/Button'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
-import { inter, poppins } from '@/lib/fonts'
+import { Input } from '../components/ui/Input'
+import { Textarea } from '../components/ui/Textarea'
+import { Button } from '../components/ui/Button'
+import { Breadcrumb } from '../components/ui/Breadcrumb'
+import { inter, poppins } from '../lib/fonts'
 
 /** Contact route — left contact info + right message form. */
 function ContactScreen() {
@@ -85,7 +85,7 @@ function ContactScreen() {
               <Input type="email" placeholder="Your Email *" className="h-12 bg-[#F5F5F5] border-none rounded-sm placeholder:text-[#666666]" />
               <Input type="tel" placeholder="Your Phone *" className="h-12 bg-[#F5F5F5] border-none rounded-sm placeholder:text-[#666666]" />
             </div>
-            <Textarea placeholder="Your Message" className="min-h-[218px] bg-[#F5F5F5] border-none rounded-sm placeholder:text-[#666666] resize-none p-4" />
+            <Textarea placeholder="Your Message" className="min-h-54.5 bg-[#F5F5F5] border-none rounded-sm placeholder:text-[#666666] resize-none p-4" />
             <div className="flex justify-end">
               <Button className="bg-[#DB4444] hover:bg-[#DB4444]/90 h-14 px-12 rounded-sm text-base">
                 Send Message

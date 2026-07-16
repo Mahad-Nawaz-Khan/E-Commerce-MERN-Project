@@ -6,7 +6,7 @@ import {
   incrementQuantity,
   decrementQuantity,
   clearCart,
-} from '@/store/slices/cartSlice'
+} from '../store/slices/cartSlice'
 
 /**
  * Cart selector hook — exposes cart state plus bound action dispatchers.

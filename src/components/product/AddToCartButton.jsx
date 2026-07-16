@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ShoppingCart } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { useCart } from '@/hooks/useCart'
+import { Button } from '../ui/Button'
+import { useCart } from '../../hooks/useCart'
 import toast from 'react-hot-toast'
 
 /**

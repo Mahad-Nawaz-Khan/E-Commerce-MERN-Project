@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
-import { inter, poppins } from '@/lib/fonts'
+import { inter, poppins } from '../../lib/fonts'
 
 /** Our Story section for the about page — text block + image on a pink background. */
 function OurStory() {
@@ -41,7 +41,7 @@ function OurStory() {
         </div>
 
         {/* Image */}
-        <div className="relative aspect-[4/3] lg:aspect-auto bg-[#F4C8D3]">
+        <div className="relative aspect-4/3 lg:aspect-auto bg-[#F4C8D3]">
           <img
             src="/images/about.png"
             alt="Women shopping with bags"

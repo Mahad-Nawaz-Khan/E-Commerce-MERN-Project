@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { Circle } from 'lucide-react'
+import { Radio } from 'antd'
 
 /**
  * RadioGroup — plain JSX/Tailwind (replaces Radix-backed shadcn RadioGroup).
@@ -31,18 +31,13 @@ function RadioGroupItem({ value, id, className = '', ...props }) {
   const checked = groupValue === value
 
   return (
-    <button
-      type="button"
-      role="radio"
+    <Radio
       id={id}
-      aria-checked={checked}
-      data-state={checked ? 'checked' : 'unchecked'}
-      onClick={() => setValue(value)}
-      className={`aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring ${className}`}
+      checked={checked}
+      onChange={() => setValue(value)}
+      className={`!m-0 !inline-flex !h-4 !w-4 !items-center !justify-center ${className}`}
       {...props}
-    >
-      {checked && <Circle className="h-3.5 w-3.5 fill-primary" />}
-    </button>
+    />
   )
 }
 

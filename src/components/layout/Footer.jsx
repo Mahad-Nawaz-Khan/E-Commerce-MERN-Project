@@ -1,26 +1,26 @@
 import { Link } from 'react-router-dom'
 import { Send } from 'lucide-react'
-import { Facebook, Twitter, Instagram, Linkedin } from '@/components/ui/SocialIcons'
-import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/Button'
+import { Facebook, Twitter, Instagram, Linkedin } from '../ui/SocialIcons'
+import { Input } from '../ui/Input'
+import { Button } from '../ui/Button'
 
 function Footer() {
   return (
     <footer className="bg-black text-white">
-      <div className="w-full max-w-[1170px] mx-auto px-4 py-16">
+      <div className="w-full max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Exclusive Column */}
-          <div className="space-y-4">
-            <h2 className="text-[24px] font-bold">Exclusive</h2>
+          <div className="space-y-5">
+            <h2 className="text-6 font-bold">Exclusive</h2>
             <p className="font-medium">Subscribe</p>
             <p className="text-sm text-gray-300">Get 10% off your first order</p>
-            <div className="flex gap-2">
+            <div className="relative max-w-55">
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-transparent border-gray-800 focus:border-gray-700"
+                className="h-12 bg-transparent border-gray-400 focus:border-gray-200 pr-12 rounded-sm"
               />
-              <Button size="icon" variant="ghost" className="border border-gray-800 hover:bg-gray-800">
+              <Button size="icon" variant="ghost" className="absolute right-0 top-0 h-12 border-0 hover:bg-transparent">
                 <Send className="h-4 w-4" />
               </Button>
             </div>
@@ -28,7 +28,7 @@ function Footer() {
 
           {/* Support Column */}
           <div className="space-y-4">
-            <h2 className="text-[20px] font-bold">Support</h2>
+            <h2 className="text-5 font-bold">Support</h2>
             <address className="not-italic text-sm text-gray-300">
               111 Bijoy sarani, Dhaka,
               <br />
@@ -40,7 +40,7 @@ function Footer() {
 
           {/* Account Column */}
           <div className="space-y-4">
-            <h2 className="text-[20px] font-bold">Account</h2>
+            <h2 className="text-5 font-bold">Account</h2>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link to="/login" className="hover:text-white transition-colors">Login / Register</Link></li>
               <li><Link to="/cart" className="hover:text-white transition-colors">Cart</Link></li>
@@ -50,7 +50,7 @@ function Footer() {
 
           {/* Quick Link Column */}
           <div className="space-y-4">
-            <h2 className="text-[20px] font-bold">Quick Link</h2>
+            <h2 className="text-5 font-bold">Quick Link</h2>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
               <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
@@ -59,7 +59,7 @@ function Footer() {
 
           {/* Download App Column */}
           <div className="space-y-4">
-            <h2 className="text-[20px] font-bold">Download App</h2>
+            <h2 className="text-5 font-bold">Download App</h2>
             <p className="text-xs text-gray-300">Save $3 with App New User Only</p>
             <div className="grid grid-cols-2 gap-4">
               <div className="relative aspect-square">
@@ -88,7 +88,7 @@ function Footer() {
                 />
               </div>
             </div>
-            <div className="flex gap-6 pt-4">
+            <div className="flex gap-4 pt-1">
               <Link to="/" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook className="h-6 w-6" />
               </Link>

@@ -1,4 +1,4 @@
-import { getProductBySlug } from '@/data/products'
+import { getProductBySlug } from '../data/products'
 
 /**
  * Single product lookup by slug — replaces the dynamic [slug] Sanity fetch

@@ -1,11 +1,11 @@
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
-import { Button } from '@/components/ui/Button'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup'
-import { Checkbox } from '@/components/ui/Checkbox'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
-import { inter } from '@/lib/fonts'
-import { useCart } from '@/hooks/useCart'
+import { Input } from '../components/ui/Input'
+import { Label } from '../components/ui/Label'
+import { Button } from '../components/ui/Button'
+import { RadioGroup, RadioGroupItem } from '../components/ui/RadioGroup'
+import { Checkbox } from '../components/ui/Checkbox'
+import { Breadcrumb } from '../components/ui/Breadcrumb'
+import { inter } from '../lib/fonts'
+import { useCart } from '../hooks/useCart'
 
 /**
  * Checkout route — billing form on the left, live order summary on the right.
@@ -22,7 +22,7 @@ function CheckoutScreen() {
       <div className="mt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
-            className="text-[7px] md:text-sm"
+            className="text-1.75 md:text-sm"
             crumbs={[
               { label: 'Home', to: '/' },
               { label: 'Cart', to: '/cart' },
