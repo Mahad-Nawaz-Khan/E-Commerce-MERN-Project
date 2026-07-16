@@ -27,7 +27,7 @@ function Checkbox({
       id={id}
       checked={checked}
       onChange={handleChange}
-      className={`!inline-flex !h-4 !w-4 !shrink-0 !items-center !justify-center ${className}`}
+      className={`inline-flex! h-4! w-4! shrink-0! items-center! justify-center! ${className}`}
       {...props}
     />
   )
