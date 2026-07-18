@@ -25,7 +25,7 @@ function NotFoundScreen() {
           <p className="text-base sm:text-lg text-[#666666] mb-8 sm:mb-12">
             Your visited page not found. You may go home page.
           </p>
-          <Button asChild className="h-12 px-8 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm text-base">
+          <Button asChild className="h-12 px-8 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm text-base text-accent">
             <Link to="/">Back to home page</Link>
           </Button>
         </div>
