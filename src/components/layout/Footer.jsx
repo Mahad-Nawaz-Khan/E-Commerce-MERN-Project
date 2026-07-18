@@ -52,8 +52,10 @@ function Footer() {
           <div className="space-y-4">
             <h2 className="text-5 font-bold">Quick Link</h2>
             <ul className="space-y-2 text-sm text-gray-300">
+              <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-use" className="hover:text-white transition-colors">Terms Of Use</Link></li>
+              <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-              <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
             </ul>
           </div>
 
