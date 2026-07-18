@@ -66,14 +66,10 @@ function BrowseCategories() {
               <Link
                 key={category.name}
                 to={`/shop?category=${encodeURIComponent(category.name)}`}
-                className={`flex min-h-36.25 flex-col items-center justify-center p-5 border rounded-sm hover:bg-[#DB4444] hover:text-white transition-colors cursor-pointer group ${
-                  category.active ? 'bg-[#DB4444] text-white' : ''
-                }`}
+                className="group flex min-h-36.25 cursor-pointer flex-col items-center justify-center rounded-sm border p-5 transition-colors hover:bg-[#DB4444] hover:text-white"
               >
                 <Icon
-                  className={`w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-4 ${
-                    category.active ? 'stroke-white' : 'stroke-black group-hover:stroke-white'
-                  }`}
+                  className="mb-2 h-8 w-8 stroke-black group-hover:stroke-white sm:mb-4 sm:h-10 sm:w-10"
                 />
                 <span className="text-sm sm:text-base font-medium text-center">
                   {category.name}

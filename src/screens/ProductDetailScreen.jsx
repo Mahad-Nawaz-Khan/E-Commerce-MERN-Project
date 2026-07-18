@@ -165,9 +165,9 @@ function ProductDetailScreen() {
 
             <div className="mt-6 flex gap-4">
               <div className="flex h-11 overflow-hidden rounded-sm border border-black">
-                <Button aria-label="Decrease quantity" variant="ghost" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="h-full! w-10! rounded-none! border-r! border-black! p-0!"><Minus className="h-4 w-4" /></Button>
+                <Button aria-label="Decrease quantity" variant="ghost" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="h-full! w-10! rounded-none! hover:bg-[#DB4444]! hover:text-white! border-r! border-black! p-0!"><Minus className="h-4 w-4" /></Button>
                 <span className="grid w-12 place-items-center text-sm font-medium">{quantity}</span>
-                <Button aria-label="Increase quantity" onClick={() => setQuantity((value) => Math.min(product.stock, value + 1))} className="h-full! w-10! rounded-none! bg-[#DB4444]! p-0! text-white! hover:bg-[#c73838]!"><Plus className="h-4 w-4" /></Button>
+                <Button aria-label="Increase quantity" onClick={() => setQuantity((value) => Math.min(product.stock, value + 1))} className="h-full! w-10! rounded-none! border-l! border-black! bg-white! p-0! text-black! hover:bg-[#DB4444]! hover:text-white!"><Plus className="h-4 w-4" /></Button>
               </div>
               <Button onClick={buyNow} className="h-11 flex-1 rounded-sm bg-[#DB4444] px-8 text-white hover:bg-[#c73838]">Buy Now</Button>
               <Button aria-label="Toggle wishlist" variant="outline" size="icon" onClick={toggleWishlist} className={`h-11! w-11! rounded-sm! border-black! ${inWishlist ? 'text-[#DB4444]!' : ''}`}><Heart className={inWishlist ? 'fill-current' : ''} /></Button>
