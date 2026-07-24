@@ -8,7 +8,7 @@ const PAGE_SIZE = 8
 
 /**
  * Explore Our Products — shows all products 8 at a time with a "Show More"
- * pagination button (mirrors the original's loadMoreProducts behavior).
+ * pagination button for browsing more products.
  * Uses the reusable ProductCard (NEW badge + rating shown here).
  */
 function ExploreProducts() {

@@ -1,14 +1,9 @@
 @import "tailwindcss";
 
-/*
- * Tailwind v4 theme config — ports the original project's shadcn/ui color tokens
- * so utilities like bg-primary, text-foreground, border-border, text-muted-foreground,
- * bg-accent, bg-destructive, ring-ring resolve exactly as the components expect.
- * The original shadcn tokens are HSL triples (space-separated), wrapped in hsl(...).
- */
+/* Tailwind v4 theme configuration. */
 
 @theme {
-  /* Fonts (replaces next/font/google Poppins + Inter) */
+  /* Fonts */
   --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
   --font-inter: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
   --font-poppins: "Poppins", system-ui, "Segoe UI", Roboto, sans-serif;

@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { Radio } from 'antd'
 
 /**
- * RadioGroup — plain JSX/Tailwind (replaces Radix-backed shadcn RadioGroup).
+ * Radio group built with JSX and Tailwind.
  * A small context pairs the group value with each item's value, mirroring
  * Radix's radio-group API used in the checkout payment selector.
  */

@@ -20,7 +20,7 @@ const features = [
 
 /**
  * Three-column service feature strip. Shared by the home and about pages.
- * The nested concentric-circle icon is preserved from the original.
+ * Each icon uses nested concentric circles.
  */
 function ServiceFeatures() {
   return (

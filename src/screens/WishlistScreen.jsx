@@ -10,7 +10,7 @@ import toast from 'react-hot-toast'
 
 /**
  * Wishlist route — saved wishlist items + a "Just For You" recommended grid.
- * Both lists reuse a local WishlistCard variant (the original had an inline
+ * Both lists reuse a local WishlistCard variant.
  * sub-component for this); wishlist cards show a Trash button + discount badge,
  * recommended cards show an Eye + NEW badge + rating.
  */

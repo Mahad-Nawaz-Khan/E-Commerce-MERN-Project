@@ -1,12 +1,8 @@
 /**
- * Static product data — replaces the Sanity CMS backend.
- *
- * Each product is a flat, normalized JS object (the source project had an
- * inconsistent `slug` shape — object on list pages, string on the detail page —
- * and Sanity asset references for images; here both are plain strings).
+ * Static product data used throughout the storefront.
  *
  * Shape:
- *   id            string   — unique id (replaces Sanity _id)
+ *   id            string   — unique id
  *   name          string
  *   slug          string   — url-safe, used in /product/:slug
  *   image         string   — primary image (used by product cards); equals images[0]

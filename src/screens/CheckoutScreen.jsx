@@ -9,7 +9,7 @@ import { useCart } from '../hooks/useCart'
 
 /**
  * Checkout route — billing form on the left, live order summary on the right.
- * The original hardcoded 2 dummy items + a $1750 total; here the order summary
+ * The order summary
  * is computed from the actual Redux cart.
  */
 function CheckoutScreen() {

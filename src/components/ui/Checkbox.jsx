@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Checkbox as AntCheckbox } from 'antd'
 
 /**
- * Checkbox — plain JSX/Tailwind (replaces the Radix-backed shadcn Checkbox).
+ * Checkbox built with JSX and Tailwind.
  * Controlled internally but exposes `onCheckedChange` for parity; also forwards
  * standard `checked`/`onChange`/`id` props for the billing form.
  */

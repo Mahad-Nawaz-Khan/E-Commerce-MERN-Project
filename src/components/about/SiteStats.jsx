@@ -8,7 +8,7 @@ const stats = [
   { icon: Wallet, number: '25k', label: 'Annual gross sale in our site', highlight: false },
 ]
 
-/** Four stat cards — the monthly-sale card is highlighted red (matches original). */
+/** Four stat cards with a highlighted monthly-sales card. */
 function SiteStats() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

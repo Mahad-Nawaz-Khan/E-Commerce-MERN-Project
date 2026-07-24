@@ -7,7 +7,7 @@ import { ExploreProducts } from '../components/home/ExploreProducts'
 import { NewArrivals } from '../components/home/NewArrivals'
 import { ServiceFeatures } from '../components/home/ServiceFeatures'
 
-/** Home route — composes the 8 home sections in the same order as the original. */
+/** Home route — composes the storefront sections. */
 function HomeScreen() {
   return (
     <main className="overflow-hidden">

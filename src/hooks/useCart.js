@@ -10,7 +10,6 @@ import {
 
 /**
  * Cart selector hook — exposes cart state plus bound action dispatchers.
- * Replaces the original project's raw localStorage actions.ts functions.
  */
 export function useCart() {
   const dispatch = useDispatch()

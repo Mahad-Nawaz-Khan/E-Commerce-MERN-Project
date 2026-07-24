@@ -8,8 +8,8 @@ import { useCountdown, useStableTarget, pad, DURATIONS } from '../../hooks/useCo
 
 /**
  * Today's Flash Sales section — shows the top "todays-deal" products via the
- * reusable ProductCard, plus a static countdown timer (matching the original).
- * Data comes from the useProducts hook (replaces the Sanity todays-deal query).
+ * reusable ProductCard and a static countdown timer.
+ * Data comes from the useProducts hook.
  */
 function FlashSales() {
   const { todaysDeals } = useProducts()
@@ -35,7 +35,7 @@ function FlashSales() {
               </span>
             </div>
 
-            {/* Countdown (static, as in the original) */}
+            {/* Countdown */}
             <div className="flex gap-5 sm:gap-20 font-bold flex-col sm:flex-row sm:items-end">
               <h2 className="text-2xl sm:text-4xl tracking-[0.04em]">Flash Sales</h2>
               <div className="flex items-center gap-2 sm:gap-4 text-sm">

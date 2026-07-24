@@ -3,7 +3,7 @@ import { Button as AntButton } from 'antd'
 
 /**
  * Button — plain JSX/Tailwind (no Radix, no cva).
- * Supports the same variants/sizes the ported components use.
+ * Supports reusable button variants and sizes.
  *
  * Props:
  *   variant: 'default' | 'outline' | 'ghost' | 'link'

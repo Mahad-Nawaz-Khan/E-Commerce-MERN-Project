@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 /**
  * Best Selling Products — top 4 "bestseller"-tagged products + a "View All" CTA.
- * Replaces the Sanity bestseller query with the useProducts hook.
+ * Uses the product data exposed by the useProducts hook.
  */
 function BestSelling() {
   const { bestsellers } = useProducts()

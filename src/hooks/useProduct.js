@@ -1,7 +1,7 @@
 import { getProductBySlug } from '../data/products'
 
 /**
- * Single product lookup by slug — replaces the dynamic [slug] Sanity fetch
+ * Single product lookup by slug.
  * on the product detail page. Returns the product or undefined (the screen
  * then redirects to the 404 page).
  */

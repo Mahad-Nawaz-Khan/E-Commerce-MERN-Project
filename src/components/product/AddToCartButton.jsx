@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 
 /**
  * Full-width "Add to Cart" CTA used on the product detail page.
- * Mirrors the original's isAdding loading state + toast feedback,
+ * Provides an isAdding loading state and toast feedback,
  * but dispatches to the Redux cart store instead of localStorage.
  */
 function AddToCartButton({ product }) {
@@ -15,7 +15,7 @@ function AddToCartButton({ product }) {
 
   const handleAddToCart = async () => {
     setIsAdding(true)
-    // tiny delay to surface the "Adding..." state, matching the original
+    // Tiny delay to surface the "Adding..." state.
     await new Promise((resolve) => setTimeout(resolve, 200))
     addToCart(product)
     setIsAdding(false)

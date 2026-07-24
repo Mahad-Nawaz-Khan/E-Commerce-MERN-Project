@@ -12,7 +12,7 @@ import { NotFoundScreen } from './NotFoundScreen'
 import toast from 'react-hot-toast'
 
 /**
- * Product detail route — the original was an SSR page that fetched a single
+ * Product detail route.
  * product from Sanity by slug. Here we look up the static product by slug from
  * the URL param; if not found we render the 404 page at the requested URL.
  */

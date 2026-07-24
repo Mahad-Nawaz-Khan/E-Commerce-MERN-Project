@@ -8,7 +8,6 @@ import { addToCart } from '../store/slices/cartSlice'
 
 /**
  * Wishlist selector hook — exposes wishlist state plus bound action dispatchers.
- * Replaces the original project's raw localStorage wishlist actions.
  * `moveAllToCart` mirrors the wishlist page's "Move All To Bag" feature.
  */
 export function useWishlist() {

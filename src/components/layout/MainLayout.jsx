@@ -3,7 +3,7 @@ import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 
 /**
- * App shell — Navbar + routed page (Outlet) + Footer, mirroring the original's
+ * App shell — Navbar + routed page (Outlet) + Footer.
  * root layout that wrapped every route.
  */
 function MainLayout() {
