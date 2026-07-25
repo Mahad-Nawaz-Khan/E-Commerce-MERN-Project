@@ -77,9 +77,19 @@ function CartScreen() {
                       >
                         <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                       </button>
-                      <span className="w-6 sm:w-8 text-center text-sm sm:text-base">
-                        {item.quantity}
-                      </span>
+                      <input
+                        aria-label={`Quantity for ${item.name}`}
+                        className="w-6 sm:w-8 bg-transparent text-center text-sm sm:text-base outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        min="1"
+                        type="number"
+                        value={item.quantity}
+                        onChange={(event) => {
+                          const quantity = Number(event.target.value)
+                          if (Number.isInteger(quantity) && quantity >= 1) {
+                            cart.updateQuantity(item.id, quantity)
+                          }
+                        }}
+                      />
                       <button
                         className="p-1 sm:p-2 hover:bg-gray-50"
                         onClick={() => cart.increment(item.id)}
@@ -103,12 +113,6 @@ function CartScreen() {
                 onClick={() => navigate('/')}
               >
                 Return To Shop
-              </Button>
-              <Button
-                variant="outline"
-                className="h-10 sm:h-12 px-6 sm:px-12 rounded-sm border-black hover:bg-black hover:text-white transition-colors w-full sm:w-auto"
-              >
-                Update Cart
               </Button>
             </div>
 
