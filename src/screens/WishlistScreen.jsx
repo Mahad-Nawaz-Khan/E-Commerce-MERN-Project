@@ -109,6 +109,11 @@ function WishlistScreen() {
     toast.success('All items moved to cart!')
   }
 
+  const handleClearWishlist = () => {
+    wishlist.clear()
+    toast.success('Wishlist cleared')
+  }
+
   return (
     <div className={`${inter.className} min-h-screen bg-white`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -118,13 +123,22 @@ function WishlistScreen() {
             Wishlist ({wishlist.count})
           </h1>
           {wishlist.count > 0 && (
-            <Button
-              variant="outline"
-              className="h-12 px-12 rounded-sm border-black hover:bg-black hover:text-white transition-colors"
-              onClick={handleMoveAllToBag}
-            >
-              Move All To Bag
-            </Button>
+            <div className="flex flex-wrap justify-end gap-3">
+              <Button
+                variant="outline"
+                className="h-12 px-6 rounded-sm border-[#DB4444] text-[#DB4444] hover:bg-[#DB4444] hover:text-white transition-colors"
+                onClick={handleClearWishlist}
+              >
+                Clear All
+              </Button>
+              <Button
+                variant="outline"
+                className="h-12 px-6 sm:px-12 rounded-sm border-black hover:bg-black hover:text-white transition-colors"
+                onClick={handleMoveAllToBag}
+              >
+                Move All To Bag
+              </Button>
+            </div>
           )}
         </div>
 
