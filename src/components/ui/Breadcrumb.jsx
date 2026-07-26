@@ -13,11 +13,11 @@ function Breadcrumb({ crumbs = [], className = '' }) {
   return (
     <nav className={`py-3.5 text-sm ${className}`}>
       <AntBreadcrumb
-        separator={<RightOutlined className="!text-xs !text-[#666666]" />}
+        separator={<RightOutlined className="!text-xs !text-muted-text" />}
         items={crumbs.map((crumb, index) => ({
           title:
             crumb.to && index < crumbs.length - 1 ? (
-              <Link to={crumb.to} className="text-[#666666] hover:text-black transition-colors">
+              <Link to={crumb.to} className="text-muted-text hover:text-black transition-colors">
                 {crumb.label}
               </Link>
             ) : (

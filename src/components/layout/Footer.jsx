@@ -7,7 +7,7 @@ import { Button } from '../ui/Button'
 function Footer() {
   return (
     <footer className="bg-black text-white">
-      <div className="w-full max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-16">
+      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Exclusive Column */}
           <div className="space-y-5">

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Heart, Search, ShoppingCart, Menu, X } from 'lucide-react'
-import { Select } from 'antd'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
 import { useCart } from '../../hooks/useCart'
@@ -49,26 +48,18 @@ function Navbar() {
   return (
     <div className="w-full bg-white relative z-50">
       {/* Top Banner */}
-      <div className="w-full bg-black text-white h-12 px-4 flex justify-between items-center text-xs">
-        <p className="text-center flex-1 font-medium">
+      <div className="w-full bg-black text-white h-12 px-4 flex items-center justify-center text-xs">
+        <p className="text-center font-medium">
           Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-          <Link to="/" className="ml-2 underline">
+          <Link to="/shop" className="ml-2 underline">
             ShopNow
           </Link>
         </p>
-        <Select
-          defaultValue="English"
-          variant="borderless"
-          size="small"
-          options={['English', 'Spanish', 'French'].map((language) => ({ value: language, label: language }))}
-          className="w-19.5 [&_.ant-select-selector]:bg-black! [&_.ant-select-selector]:text-white! [&_.ant-select-selection-item]:text-white! [&_.ant-select-arrow]:text-white!"
-          popupClassName="exclusive-language-menu"
-        />
       </div>
 
       {/* Main Navigation */}
-      <div className="border-b border-[#e5e5e5]">
-        <div className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0">
+      <div className="border-b border-border-subtle">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
           <div className="flex items-center justify-between h-20">
             {/* Mobile Menu Button */}
             <Button
@@ -107,7 +98,7 @@ function Navbar() {
                 <Input
                   type="search"
                   placeholder="What are you looking for?"
-                  className="w-61.25 h-9 pr-8 bg-[#f5f5f5] border-0 rounded-sm focus:bg-white transition-colors text-xs"
+                  className="w-61.25 h-9 pr-8 bg-surface border-0 rounded-sm focus:bg-primary transition-colors text-xs"
                   value={searchTerm}
                   onChange={(event) => setSearchTerm(event.target.value)}
                 />
@@ -122,7 +113,7 @@ function Navbar() {
                 className="relative hidden md:flex hover:bg-gray-100"
               >
                 <Heart className="w-5 h-5" />
-                {wishlist.count > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#DB4444] px-1 text-2.5 text-white">{wishlist.count}</span>}
+                {wishlist.count > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-secondary px-1 text-2.5 text-secondary-foreground">{wishlist.count}</span>}
                 <span className="sr-only">Wishlist</span>
               </Button>
               <Button
@@ -132,7 +123,7 @@ function Navbar() {
                 className="relative hover:bg-gray-100"
               >
                 <ShoppingCart className="w-5 h-5" />
-                {cart.totalItems > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#DB4444] px-1 text-2.5 text-white">{cart.totalItems}</span>}
+                {cart.totalItems > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-secondary px-1 text-2.5 text-secondary-foreground">{cart.totalItems}</span>}
                 <span className="sr-only">Cart</span>
               </Button>
             </div>

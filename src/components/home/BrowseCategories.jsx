@@ -25,14 +25,14 @@ function BrowseCategories() {
   const [offset, setOffset] = useState(0)
   const visibleCategories = [...categories.slice(offset), ...categories.slice(0, offset)]
   return (
-    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12 sm:py-16">
       <div className="flex flex-col gap-7">
         {/* Header Section */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-[#DB4444] rounded-sm" />
-              <span className="text-[#DB4444] text-sm sm:text-base font-semibold">
+              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-secondary rounded-sm" />
+              <span className="text-secondary text-sm sm:text-base font-semibold">
                 Categories
               </span>
             </div>
@@ -42,7 +42,7 @@ function BrowseCategories() {
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-surface"
               onClick={() => setOffset((value) => (value - 1 + categories.length) % categories.length)}
             >
               <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -50,7 +50,7 @@ function BrowseCategories() {
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-surface"
               onClick={() => setOffset((value) => (value + 1) % categories.length)}
             >
               <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -66,7 +66,7 @@ function BrowseCategories() {
               <Link
                 key={category.name}
                 to={`/shop?category=${encodeURIComponent(category.name)}`}
-                className="group flex min-h-36.25 cursor-pointer flex-col items-center justify-center rounded-sm border p-5 transition-colors hover:bg-[#DB4444] hover:text-white"
+                className="group flex min-h-36.25 cursor-pointer flex-col items-center justify-center rounded-sm border p-5 transition-colors hover:bg-secondary hover:text-secondary-foreground"
               >
                 <Icon
                   className="mb-2 h-8 w-8 stroke-black group-hover:stroke-white sm:mb-4 sm:h-10 sm:w-10"

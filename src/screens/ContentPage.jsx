@@ -3,10 +3,10 @@ import { Breadcrumb } from '../components/ui/Breadcrumb'
 function ContentPage({ title, intro, sections }) {
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-292.5 px-4 py-10 sm:px-6 lg:px-0">
+      <div className="w-full px-4 py-10 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
         <Breadcrumb crumbs={[{ label: 'Home', to: '/' }, { label: title }]} />
         <div className="mx-auto max-w-3xl py-12 sm:py-16">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#DB4444]">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-secondary">
             Quick Link
           </p>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>

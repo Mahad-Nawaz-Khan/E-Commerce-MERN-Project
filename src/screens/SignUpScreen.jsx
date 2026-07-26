@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { InputUnderline } from '../components/ui/InputUnderline'
-import { inter } from '../lib/fonts'
 
 /** Sign-up route — split layout: promo image left, create-account form right. */
 function SignUpScreen() {
   return (
-    <div className={`${inter.className} min-h-screen grid lg:grid-cols-2 my-10`}>
+    <div className="font-inter min-h-screen grid lg:grid-cols-2 my-10">
       {/* Left Side - Image */}
-      <div className="hidden lg:block relative bg-[#CBE4E8]">
+      <div className="hidden lg:block relative bg-promo">
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <img
             src="/images/signup-image.png"
@@ -32,14 +31,14 @@ function SignUpScreen() {
             <InputUnderline type="password" label="Password" />
             <Button
               type="submit"
-              className="h-12! w-full! rounded-sm! bg-[#DB4444]! text-base! text-white! font-normal! hover:bg-[#c73838]!"
+              className="h-12! w-full! rounded-sm! bg-secondary! text-base! text-secondary-foreground! font-normal! hover:bg-secondary-hover!"
             >
               Create Account
             </Button>
             <Button
               type="button"
               variant="outline"
-              className="h-12! w-full! rounded-sm! border-[#999]! bg-white! text-base! font-normal! text-black! shadow-none! hover:border-black! hover:bg-white!"
+              className="h-12! w-full! rounded-sm! border-border-strong! bg-primary! text-base! font-normal! text-black! shadow-none! hover:border-black! hover:bg-primary!"
             >
               <img src="/images/logos/google.svg" alt="Google" className="mr-2 h-4 w-4" />
               Sign up with Google
@@ -50,7 +49,7 @@ function SignUpScreen() {
             Already have account?{' '}
             <Link
               to="/login"
-              className="text-[#DB4444] hover:text-[#DB4444]/90 font-medium underline"
+              className="text-secondary hover:text-secondary/90 font-medium underline"
             >
               Log in
             </Link>

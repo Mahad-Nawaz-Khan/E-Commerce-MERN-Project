@@ -12,21 +12,21 @@ function BestSelling() {
   const products = bestsellers.slice(0, 4)
 
   return (
-    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12 sm:py-16">
       <div className="flex flex-col gap-7">
         {/* Header Section */}
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-col gap-4 w-full">
             <div className="flex items-center gap-2">
-              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-[#DB4444] rounded-sm" />
-              <span className="text-[#DB4444] text-sm sm:text-base font-semibold">
+              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-secondary rounded-sm" />
+              <span className="text-secondary text-sm sm:text-base font-semibold">
                 This Month
               </span>
             </div>
             <div className="flex items-center justify-between w-full">
               <h2 className="text-2xl sm:text-4xl font-semibold tracking-[0.04em]">Best Selling Products</h2>
               <Link to="/shop">
-                <Button className="bg-[#DB4444] hover:bg-[#DB4444]/90 text-white h-10 sm:h-12 px-8 sm:px-12 rounded-sm text-sm sm:text-base font-medium">View All</Button>
+                <Button className="bg-secondary hover:bg-secondary-hover text-secondary-foreground h-10 sm:h-12 px-8 sm:px-12 rounded-sm text-sm sm:text-base font-medium">View All</Button>
               </Link>
             </div>
           </div>

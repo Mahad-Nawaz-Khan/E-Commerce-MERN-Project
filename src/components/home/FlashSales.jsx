@@ -14,23 +14,24 @@ import { useCountdown, useStableTarget, pad, DURATIONS } from '../../hooks/useCo
 function FlashSales() {
   const { todaysDeals } = useProducts()
   const [startIndex, setStartIndex] = useState(0)
-  const visibleProducts = todaysDeals.slice(startIndex, startIndex + 4)
+  const productsPerView = 4
+  const visibleProducts = todaysDeals.slice(startIndex, startIndex + productsPerView)
   const canGoPrevious = startIndex > 0
-  const canGoNext = startIndex + 4 < todaysDeals.length
+  const canGoNext = startIndex + productsPerView < todaysDeals.length
 
   // Live countdown — 3 days from first mount, ticking every second
   const target = useStableTarget(3 * DURATIONS.DAY)
   const { days, hours, minutes, seconds } = useCountdown(target)
 
   return (
-    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16 mt-4 sm:mt-12">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12 sm:py-16 mt-4 sm:mt-12">
       <div className="flex flex-col gap-7">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
           <div className="flex gap-4 flex-col">
             <div className="flex items-center gap-2">
-              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-[#DB4444] rounded-sm" />
-              <span className="text-[#DB4444] text-sm font-semibold">
+              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-secondary rounded-sm" />
+              <span className="text-secondary text-sm font-semibold">
                 Today&apos;s
               </span>
             </div>
@@ -50,7 +51,7 @@ function FlashSales() {
                       <div className="text-2.75 font-medium mb-1">{label}</div>
                       <div className="font-bold text-xl leading-none">{value}</div>
                     </div>
-                    {i < arr.length - 1 && <div className="font-bold text-[#e07575] text-xl">:</div>}
+                    {i < arr.length - 1 && <div className="font-bold text-countdown text-xl">:</div>}
                   </div>
                 ))}
               </div>
@@ -61,7 +62,7 @@ function FlashSales() {
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-surface"
                 disabled={!canGoPrevious}
                 onClick={() => setStartIndex((index) => Math.max(0, index - 1))}
             >
@@ -70,9 +71,9 @@ function FlashSales() {
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-surface"
                 disabled={!canGoNext}
-                onClick={() => setStartIndex((index) => Math.min(todaysDeals.length - 4, index + 1))}
+                onClick={() => setStartIndex((index) => Math.min(todaysDeals.length - productsPerView, index + 1))}
             >
               <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
@@ -81,11 +82,13 @@ function FlashSales() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-7.5 lg:justify-items-start">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} showNewBadge={false} />
+          {visibleProducts.map((product, index) => (
+            <div key={product.id} className={index === 3 ? 'md:max-lg:hidden' : ''}>
+              <ProductCard product={product} showNewBadge={false} />
+            </div>
           ))}
         </div>
-        <div className="flex justify-center pt-5"><Link to="/shop"><Button className="h-12 bg-[#DB4444] hover:bg-[#c73838] px-12 text-white rounded-sm">View All Products</Button></Link></div>
+        <div className="flex justify-center pt-5"><Link to="/shop"><Button className="h-12 bg-secondary hover:bg-secondary-hover px-12 text-secondary-foreground rounded-sm">View All Products</Button></Link></div>
       </div>
     </section>
   )

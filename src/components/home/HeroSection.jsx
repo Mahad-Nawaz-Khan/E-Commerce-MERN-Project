@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
-import { poppins, inter } from '../../lib/fonts'
 
 const categories = [
   "Woman's Fashion",
@@ -20,10 +19,10 @@ function HeroSection() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
-    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 pt-6 sm:pt-10">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 pt-6 sm:pt-10">
       <div className="grid grid-cols-1 lg:grid-cols-[195px_1fr] gap-0">
         {/* Categories Sidebar */}
-        <div className="bg-white lg:border-r lg:border-[#e5e5e5] order-2 lg:order-1">
+        <div className="bg-primary lg:border-r lg:border-border-subtle order-2 lg:order-1">
           <div className="flex lg:hidden justify-between items-center py-4 border-b">
             <h2 className="font-semibold">Categories</h2>
             <button
@@ -60,7 +59,7 @@ function HeroSection() {
             <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 lg:p-16">
               <div className="max-w-67.5 z-10">
                 <h1
-                  className={`${poppins.className} text-sm mb-5 flex items-center gap-2`}
+                  className="font-poppins text-sm mb-5 flex items-center gap-2"
                 >
                   <img
                     src="/images/logos/apple.svg"
@@ -72,14 +71,14 @@ function HeroSection() {
                   <span>iPhone 14 Series</span>
                 </h1>
                 <p
-                  className={`${inter.className} text-3xl sm:text-4xl lg:text-12 leading-[1.2] font-semibold tracking-[0.04em] mb-6 flex flex-col gap-1`}
+                  className="font-inter text-3xl sm:text-4xl lg:text-12 leading-[1.2] font-semibold tracking-[0.04em] mb-6 flex flex-col gap-1"
                 >
                   <span>Up to 10%</span>
                   <span>off Voucher</span>
                 </p>
                 <Link
                   to="/shop"
-                  className={`${inter.className} inline-flex items-center gap-2 text-sm font-medium underline underline-offset-5`}
+                  className="font-inter inline-flex items-center gap-2 text-sm font-medium underline underline-offset-5"
                 >
                   Shop Now
                   <ChevronRight className="w-4 h-4 ml-1" />
@@ -104,7 +103,7 @@ function HeroSection() {
                 key={index}
                 onClick={() => setActiveSlide(index)}
                 className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${
-                  activeSlide === index ? 'bg-[#DB4444] ring-2 ring-white' : 'bg-[#808080]'
+                  activeSlide === index ? 'bg-secondary ring-2 ring-primary' : 'bg-slider-inactive'
                 }`}
               >
                 <span className="sr-only">Slide {index + 1}</span>

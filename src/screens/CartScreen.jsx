@@ -3,7 +3,6 @@ import { Minus, Plus, X } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Breadcrumb } from '../components/ui/Breadcrumb'
-import { inter, poppins } from '../lib/fonts'
 import { useCart } from '../hooks/useCart'
 
 /** Cart route — table of cart items with quantity steppers + cart total. */
@@ -12,10 +11,10 @@ function CartScreen() {
   const cart = useCart()
 
   return (
-    <div className={`${inter.className} min-h-screen bg-white`}>
+    <div className="font-inter min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="mt-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
           <Breadcrumb
             crumbs={[
               { label: 'Home', to: '/' },
@@ -25,14 +24,14 @@ function CartScreen() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20">
+      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-8 sm:py-12 md:py-16 lg:py-20">
         {cart.items.length === 0 ? (
           <div className="text-center py-20">
             <h2 className="text-2xl font-medium mb-4">Your cart is empty</h2>
             <p className="text-gray-600 mb-8">Add items to your cart to see them here.</p>
-            <Button asChild className="bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm" >
-              <Link to="/">Continue Shopping</Link>
-            </Button>
+            <Link to="/" className="inline-flex h-10 items-center justify-center rounded-sm bg-secondary px-4 text-sm font-medium text-secondary-foreground hover:bg-secondary-hover">
+              Continue Shopping
+            </Link>
           </div>
         ) : (
           <>
@@ -53,12 +52,12 @@ function CartScreen() {
                   >
                     <div className="flex items-center gap-2 sm:gap-4">
                       <button
-                        className="text-[#666666] hover:text-black"
+                        className="text-muted-text hover:text-black"
                         onClick={() => cart.removeFromCart(item.id)}
                       >
                         <X className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
-                      <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-[#F5F5F5]">
+                      <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-surface">
                         {item.image && (
                           <img
                             src={item.image}
@@ -123,13 +122,13 @@ function CartScreen() {
                   placeholder="Coupon Code"
                   className="h-10 sm:h-12 w-full sm:max-w-75 rounded-sm border-gray-300 focus:border-gray-400 focus:ring-0"
                 />
-                <Button className="h-10 sm:h-12 px-6 sm:px-8 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm w-full sm:w-auto">
+                <Button className="h-10 sm:h-12 px-6 sm:px-8 bg-secondary hover:bg-secondary-hover rounded-sm w-full sm:w-auto">
                   Apply Coupon
                 </Button>
               </div>
 
               <div className="border rounded-sm p-4 sm:p-6 space-y-4 w-full lg:max-w-117.5 lg:ml-auto">
-                <h2 className={`${poppins.className} text-lg sm:text-xl font-medium mb-4`}>
+                <h2 className="font-poppins text-lg sm:text-xl font-medium mb-4">
                   Cart Total
                 </h2>
 
@@ -139,7 +138,7 @@ function CartScreen() {
                 </div>
                 <div className="flex justify-between py-3 border-b text-sm sm:text-base">
                   <span>Shipping:</span>
-                  <span className="text-[#666666]">Free</span>
+                  <span className="text-muted-text">Free</span>
                 </div>
                 <div className="flex justify-between py-3 text-sm sm:text-base">
                   <span>Total:</span>
@@ -148,7 +147,7 @@ function CartScreen() {
 
                 <Button
                   onClick={() => navigate('/checkout')}
-                  className="w-full h-10 sm:h-12 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm mt-4 text-sm sm:text-base"
+                  className="w-full h-10 sm:h-12 bg-secondary hover:bg-secondary-hover rounded-sm mt-4 text-sm sm:text-base"
                 >
                   Proceed to checkout
                 </Button>

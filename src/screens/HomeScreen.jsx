@@ -13,11 +13,11 @@ function HomeScreen() {
     <main className="overflow-hidden">
       <HeroSection />
       <FlashSales />
-      <div className="mx-auto max-w-292.5 border-t border-[#e5e5e5]" />
+      <div className="mx-4 border-t border-border-subtle sm:mx-6 lg:mx-10 xl:mx-16 2xl:mx-24" />
       <BrowseCategories />
-      <div className="mx-auto max-w-292.5 border-t border-[#e5e5e5]" />
+      <div className="mx-4 border-t border-border-subtle sm:mx-6 lg:mx-10 xl:mx-16 2xl:mx-24" />
       <BestSelling />
-      <div className="mx-auto max-w-292.5 border-t border-[#e5e5e5]" />
+      <div className="mx-4 border-t border-border-subtle sm:mx-6 lg:mx-10 xl:mx-16 2xl:mx-24" />
       <MusicPromo />
       <ExploreProducts />
       <NewArrivals />

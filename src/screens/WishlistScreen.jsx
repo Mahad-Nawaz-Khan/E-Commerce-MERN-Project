@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { Eye, Trash2 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { StarRating } from '../components/ui/StarRating'
-import { inter, poppins } from '../lib/fonts'
 import { useWishlist } from '../hooks/useWishlist'
 import { useCart } from '../hooks/useCart'
 import { useProducts } from '../hooks/useProducts'
@@ -20,14 +19,14 @@ function WishlistCard({ item, isWishlistItem = false, onRemove, onAddToCart }) {
 
   return (
     <article className="group flex w-full aspect-27/35 flex-col lg:w-67.5 lg:h-87.5">
-      <div className="relative h-[71.428571%] shrink-0 bg-[#F5F5F5] rounded-sm">
+      <div className="relative h-[71.428571%] shrink-0 bg-surface rounded-sm">
         {hasDiscount && (
-          <span className="absolute top-3 left-3 bg-[#DB4444] text-white text-xs px-3 py-1 rounded-sm">
+          <span className="absolute top-3 left-3 bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-sm">
             -{Math.round((1 - item.price / item.originalPrice) * 100)}%
           </span>
         )}
         {isNew && (
-          <span className="absolute top-3 left-3 bg-[#00FF66] text-black text-xs px-3 py-1 rounded-sm">
+          <span className="absolute top-3 left-3 bg-sale-success text-black text-xs px-3 py-1 rounded-sm">
             NEW
           </span>
         )}
@@ -71,16 +70,16 @@ function WishlistCard({ item, isWishlistItem = false, onRemove, onAddToCart }) {
       <div className="flex min-h-0 flex-1 flex-col pt-3">
         <h3 className="line-clamp-1 font-medium mb-2">{item.name}</h3>
         <div className="flex gap-3 mb-2">
-          <span className="text-[#DB4444] font-medium">${item.price}</span>
+          <span className="text-secondary font-medium">${item.price}</span>
           {hasDiscount && (
-            <span className="text-[#666666] line-through">${item.originalPrice}</span>
+            <span className="text-muted-text line-through">${item.originalPrice}</span>
           )}
         </div>
 
         {!isWishlistItem && (
           <div className="flex items-center gap-2">
             <StarRating rating={item.rating} />
-            <span className="text-sm text-[#666666]">({item.reviews})</span>
+            <span className="text-sm text-muted-text">({item.reviews})</span>
           </div>
         )}
       </div>
@@ -115,18 +114,18 @@ function WishlistScreen() {
   }
 
   return (
-    <div className={`${inter.className} min-h-screen bg-white`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="font-inter min-h-screen bg-white">
+      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-20">
         {/* Wishlist Header */}
         <div className="flex justify-between items-center mb-10">
-          <h1 className={`${poppins.className} text-2xl font-medium`}>
+          <h1 className="font-poppins text-2xl font-medium">
             Wishlist ({wishlist.count})
           </h1>
           {wishlist.count > 0 && (
             <div className="flex flex-wrap justify-end gap-3">
               <Button
                 variant="outline"
-                className="h-12 px-6 rounded-sm border-[#DB4444] text-[#DB4444] hover:bg-[#DB4444] hover:text-white transition-colors"
+                className="h-12 px-6 rounded-sm border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground transition-colors"
                 onClick={handleClearWishlist}
               >
                 Clear All
@@ -166,8 +165,8 @@ function WishlistScreen() {
         <div className="space-y-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-5 h-10 bg-[#DB4444] rounded-sm" />
-              <h2 className={`${poppins.className} text-2xl font-medium`}>Just For You</h2>
+              <div className="w-5 h-10 bg-secondary rounded-sm" />
+              <h2 className="font-poppins text-2xl font-medium">Just For You</h2>
             </div>
             <Button
               variant="outline"

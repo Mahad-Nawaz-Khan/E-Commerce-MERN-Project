@@ -24,11 +24,11 @@ const features = [
  */
 function ServiceFeatures() {
   return (
-    <section className="w-full max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-16 sm:py-24">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-16 sm:py-24">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
         {features.map(({ icon: Icon, title, description }) => (
           <div key={title} className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 rounded-full bg-[#c1c1c1] flex items-center justify-center mb-6">
+            <div className="w-20 h-20 rounded-full bg-icon-muted flex items-center justify-center mb-6">
                 <div className="w-14.5 h-14.5 rounded-full bg-black flex items-center justify-center">
                   <Icon className="w-8 h-8 text-white" />
                 </div>

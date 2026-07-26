@@ -9,7 +9,7 @@
   --font-poppins: "Poppins", system-ui, "Segoe UI", Roboto, sans-serif;
 
   /* shadcn color tokens (light theme — the only theme the UI uses) */
-  --color-background: hsl(0 0% 100%);
+  --color-background: #ffffff;
   --color-foreground: hsl(0 0% 3.9%);
 
   --color-card: hsl(0 0% 100%);
@@ -18,11 +18,30 @@
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(0 0% 3.9%);
 
-  --color-primary: hsl(0 0% 9%);
-  --color-primary-foreground: hsl(0 0% 98%);
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
 
-  --color-secondary: hsl(0 0% 96.1%);
-  --color-secondary-foreground: hsl(0 0% 9%);
+  --color-secondary: #db4444;
+  --color-secondary-foreground: #ffffff;
+  --color-secondary-hover: #c73838;
+
+  --color-surface: #f5f5f5;
+  --color-surface-hover: #eeeeee;
+  --color-muted-text: #666666;
+  --color-subtle-text: #777777;
+  --color-body-text: #333333;
+  --color-border-subtle: #e5e5e5;
+  --color-border-strong: #999999;
+  --color-sale-success: #00ff66;
+  --color-stock-success: #00b962;
+  --color-rating: #ffad33;
+  --color-rating-empty: #d4d4d4;
+  --color-countdown: #e07575;
+  --color-promo: #cbe4e8;
+  --color-story: #f4c8d3;
+  --color-icon-muted: #c1c1c1;
+  --color-slider-inactive: #808080;
+  --color-dot-inactive: #d9d9d9;
 
   --color-muted: hsl(0 0% 96.1%);
   --color-muted-foreground: hsl(0 0% 45.1%);
@@ -75,6 +94,3 @@
   font-size: inherit;
 }
 
-.exclusive-language-menu .ant-select-item-option-selected {
-  background: #f5f5f5;
-}

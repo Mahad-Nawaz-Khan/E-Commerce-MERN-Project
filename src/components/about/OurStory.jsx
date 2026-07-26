@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
-import { inter, poppins } from '../../lib/fonts'
 
 /** Our Story section for the about page — text block + image on a pink background. */
 function OurStory() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-8">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm mb-8 my-10">
         <Link to="/" className="text-gray-500 hover:text-gray-900">
@@ -20,10 +19,10 @@ function OurStory() {
         {/* Story Content */}
         <div className="relative">
           <div className="p-6 sm:p-8">
-            <h1 className={`text-3xl sm:text-4xl font-medium mb-6 ${inter.className}`}>
+            <h1 className="font-inter text-3xl sm:text-4xl font-medium mb-6">
               Our Story
             </h1>
-            <div className={`space-y-4 text-base sm:text-lg leading-relaxed ${poppins.className}`}>
+            <div className="font-poppins space-y-4 text-base sm:text-lg leading-relaxed">
               <p>
                 Launched in 2015, Exclusive is South Asia&apos;s premier online shopping
                 marketplace with an active presence in Bangladesh. Supported by a wide
@@ -41,7 +40,7 @@ function OurStory() {
         </div>
 
         {/* Image */}
-        <div className="relative aspect-4/3 lg:aspect-auto bg-[#F4C8D3]">
+        <div className="relative aspect-4/3 lg:aspect-auto bg-story">
           <img
             src="/images/about.png"
             alt="Women shopping with bags"

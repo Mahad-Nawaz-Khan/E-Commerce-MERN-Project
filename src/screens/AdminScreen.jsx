@@ -33,8 +33,8 @@ function AdminScreen() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] py-10">
-      <div className="mx-auto grid max-w-292.5 gap-6 px-4 sm:px-6 lg:grid-cols-[240px_1fr] lg:px-0">
+    <div className="min-h-screen bg-surface py-10">
+      <div className="grid w-full gap-6 px-4 sm:px-6 lg:grid-cols-[240px_1fr] lg:px-10 xl:px-16 2xl:px-24">
         <aside className="h-fit bg-black p-5 text-white">
           <p className="text-xl font-semibold">Admin</p>
           <p className="mt-1 text-xs text-gray-400">Content & products</p>
@@ -45,7 +45,7 @@ function AdminScreen() {
                 type="button"
                 onClick={() => setActive(id)}
                 className={`flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition ${
-                  active === id ? 'bg-[#DB4444] text-white' : 'text-gray-300 hover:bg-white/10'
+                  active === id ? 'bg-secondary text-secondary-foreground' : 'text-gray-300 hover:bg-primary/10'
                 }`}
               >
                 <Icon className="size-4" />
@@ -73,7 +73,7 @@ function AdminScreen() {
                   <Field label="Description"><Textarea required rows={5} placeholder="Product description" /></Field>
                 </div>
               </div>
-              <Button htmlType="submit" className="mt-7 h-11! rounded-sm! bg-[#DB4444]! px-6!">
+              <Button htmlType="submit" className="mt-7 h-11! rounded-sm! bg-secondary! px-6!">
                 <PackagePlus /> Add demo product
               </Button>
             </form>
@@ -89,7 +89,7 @@ function AdminScreen() {
                   </div>
                 ))}
               </div>
-              <Button htmlType="submit" className="mt-7 h-11! rounded-sm! bg-[#DB4444]! px-6!"><Save /> Save demo content</Button>
+              <Button htmlType="submit" className="mt-7 h-11! rounded-sm! bg-secondary! px-6!"><Save /> Save demo content</Button>
             </form>
           ) : (
             <form onSubmit={saveDemo}>
@@ -103,7 +103,7 @@ function AdminScreen() {
                   </div>
                 ))}
               </div>
-              <Button htmlType="submit" className="mt-7 h-11! rounded-sm! bg-[#DB4444]! px-6!"><Save /> Save demo content</Button>
+              <Button htmlType="submit" className="mt-7 h-11! rounded-sm! bg-secondary! px-6!"><Save /> Save demo content</Button>
             </form>
           )}
         </section>

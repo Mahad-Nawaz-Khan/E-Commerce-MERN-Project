@@ -35,7 +35,7 @@ function RadioGroupItem({ value, id, className = '', ...props }) {
       id={id}
       checked={checked}
       onChange={() => setValue(value)}
-      className={`!m-0 !inline-flex !h-4 !w-4 !items-center !justify-center ${className}`}
+      className={`m-0! inline-flex! h-4! w-4! items-center! justify-center! ${className}`}
       {...props}
     />
   )

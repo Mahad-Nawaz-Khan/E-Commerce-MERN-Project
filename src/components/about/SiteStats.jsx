@@ -1,5 +1,4 @@
 import { Calendar, DollarSign, ShoppingBag, Wallet } from 'lucide-react'
-import { inter, poppins } from '../../lib/fonts'
 
 const stats = [
   { icon: Calendar, number: '10.5k', label: 'Sellers active our site', highlight: false },
@@ -11,7 +10,7 @@ const stats = [
 /** Four stat cards with a highlighted monthly-sales card. */
 function SiteStats() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon
@@ -19,7 +18,7 @@ function SiteStats() {
             <div
               key={index}
               className={`relative p-8 flex flex-col items-center justify-center text-center border rounded-sm ${
-                stat.highlight ? 'bg-[#DB4444] text-white' : 'bg-white'
+                stat.highlight ? 'bg-secondary text-secondary-foreground' : 'bg-primary text-primary-foreground'
               }`}
             >
               <div
@@ -29,10 +28,10 @@ function SiteStats() {
               >
                 <Icon className={`w-8 h-8 ${stat.highlight ? 'text-white' : 'text-black'}`} />
               </div>
-              <div className={`text-8 font-semibold mb-1 ${inter.className}`}>
+              <div className="font-inter text-8 font-semibold mb-1">
                 {stat.number}
               </div>
-              <div className={`text-base ${poppins.className}`}>{stat.label}</div>
+              <div className="font-poppins text-base">{stat.label}</div>
             </div>
           )
         })}

@@ -21,14 +21,14 @@ function ExploreProducts() {
   const loadMore = () => setVisibleCount((count) => count + PAGE_SIZE)
 
   return (
-    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12 sm:py-16">
       <div className="flex flex-col gap-7">
         {/* Header Section */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-[#DB4444] rounded-1" />
-              <span className="text-[#DB4444] text-sm sm:text-base font-semibold">
+              <div className="w-4 sm:w-5 h-8 sm:h-10 bg-secondary rounded-1" />
+              <span className="text-secondary text-sm sm:text-base font-semibold">
                 Our Products
               </span>
             </div>
@@ -37,10 +37,10 @@ function ExploreProducts() {
             </div>
           </div>
           <div className="flex gap-2 sm:gap-4">
-            <Button variant="outline" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]">
+            <Button variant="outline" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-surface">
               <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
-            <Button variant="outline" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-[#f5f5f5]">
+            <Button variant="outline" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-0 bg-surface">
               <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </div>
@@ -57,7 +57,7 @@ function ExploreProducts() {
         {hasMore && (
           <div className="flex justify-center mt-6 sm:mt-10">
             <Button
-              className="bg-[#DB4444] hover:bg-[#DB4444]/90 text-white h-10 sm:h-12 px-8 sm:px-12 rounded-1 text-sm sm:text-base font-medium"
+              className="bg-secondary hover:bg-secondary-hover text-secondary-foreground h-10 sm:h-12 px-8 sm:px-12 rounded-1 text-sm sm:text-base font-medium"
               onClick={loadMore}
             >
               Show More Products

@@ -33,10 +33,10 @@ function ArrivalsCard({ image, alt, title, description, className }) {
 
 function NewArrivals() {
   return (
-    <section className="w-full max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12 sm:py-16">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-1.25 h-10 bg-[#DB4444]" />
-        <span className="text-[#DB4444] text-base font-semibold tracking-tight">Featured</span>
+        <div className="w-1.25 h-10 bg-secondary" />
+        <span className="text-secondary text-base font-semibold tracking-tight">Featured</span>
       </div>
 
       <h2 className="text-2xl sm:text-4xl font-semibold mb-10 tracking-[0.04em]">New Arrival</h2>

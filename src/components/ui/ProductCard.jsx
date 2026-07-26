@@ -58,10 +58,10 @@ function ProductCard({
       className={`group flex w-full aspect-27/35 flex-col bg-white rounded-sm lg:w-67.5 lg:h-87.5 ${className}`}
     >
       <Link to={`/product/${product.slug}`} className="block h-[71.428571%] shrink-0">
-        <div className="relative h-full bg-[#F5F5F5] rounded-sm p-3 sm:p-4">
+        <div className="relative h-full bg-surface rounded-sm p-3 sm:p-4">
           {(isNew || discount > 0) && (
             <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
-              <span className={`${isNew ? 'bg-[#00FF66] text-black' : 'bg-[#DB4444] text-white'} text-2.5 sm:text-xs px-2 sm:px-3 py-1 rounded-sm`}>
+              <span className={`${isNew ? 'bg-sale-success text-black' : 'bg-secondary text-secondary-foreground'} text-2.5 sm:text-xs px-2 sm:px-3 py-1 rounded-sm`}>
                 {isNew ? 'NEW' : `-${discount}%`}
               </span>
             </div>
@@ -77,16 +77,13 @@ function ProductCard({
             >
               <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              asChild
-              className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-white"
+            <Link
+              to={`/product/${product.slug}`}
+              aria-label={`View ${product.name}`}
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white sm:h-8 sm:w-8"
             >
-              <Link to={`/product/${product.slug}`}>
-                <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
-              </Link>
-            </Button>
+              <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
+            </Link>
           </div>
 
           {product.image && (
@@ -115,11 +112,11 @@ function ProductCard({
           {product.name}
         </h3>
         <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
-          <span className="text-[#DB4444] font-medium text-sm sm:text-base">
+          <span className="text-secondary font-medium text-sm sm:text-base">
             ${product.price}
           </span>
           {product.originalPrice > product.price && (
-            <span className="text-[#666666] line-through text-xs sm:text-sm">
+            <span className="text-muted-text line-through text-xs sm:text-sm">
               ${product.originalPrice}
             </span>
           )}
@@ -127,7 +124,7 @@ function ProductCard({
         {showRating && (
           <div className="flex items-center gap-1 sm:gap-2 whitespace-nowrap">
             <StarRating rating={product.rating} />
-            <span className="text-xs sm:text-sm text-[#666666]">
+            <span className="text-xs sm:text-sm text-muted-text">
               ({product.reviews})
             </span>
           </div>

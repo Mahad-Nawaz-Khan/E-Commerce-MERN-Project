@@ -12,12 +12,12 @@ function MusicPromo() {
   const { hours, days, minutes, seconds } = useCountdown(target)
 
   return (
-    <section className="max-w-292.5 mx-auto px-4 sm:px-6 lg:px-0 py-12 sm:py-16">
+    <section className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-12 sm:py-16">
       <div className="relative overflow-hidden">
         <div className="bg-black text-white p-8 sm:p-12 lg:p-14 min-h-105 sm:min-h-125 flex flex-col sm:flex-row items-center">
           {/* Left Content */}
           <div className="w-full sm:w-1/2 z-10">
-            <span className="text-[#00FF66] text-sm sm:text-base mb-4 block">Categories</span>
+            <span className="text-sale-success text-sm sm:text-base mb-4 block">Categories</span>
             <h2 className="text-3xl sm:text-5xl font-semibold tracking-[0.04em] mb-8 sm:mb-12 leading-tight">
               Enhance Your
               <br />
@@ -43,7 +43,7 @@ function MusicPromo() {
             </div>
 
             <Link to="/product/jbl-bluetooth-speaker">
-              <Button className="bg-[#00FF66] hover:bg-[#00FF66]/90 text-black font-medium px-8 h-12 rounded">Buy Now!</Button>
+              <Button className="bg-sale-success hover:bg-sale-success/90 text-black font-medium px-8 h-12 rounded">Buy Now!</Button>
             </Link>
           </div>
 

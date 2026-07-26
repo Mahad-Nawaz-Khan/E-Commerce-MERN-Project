@@ -4,7 +4,6 @@ import { Button } from '../components/ui/Button'
 import { RadioGroup, RadioGroupItem } from '../components/ui/RadioGroup'
 import { Checkbox } from '../components/ui/Checkbox'
 import { Breadcrumb } from '../components/ui/Breadcrumb'
-import { inter } from '../lib/fonts'
 import { useCart } from '../hooks/useCart'
 
 /**
@@ -17,10 +16,10 @@ function CheckoutScreen() {
   const shipping = 0 // free
 
   return (
-    <div className={`${inter.className} min-h-screen bg-white`}>
+    <div className="font-inter min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="mt-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
           <Breadcrumb
             className="text-1.75 md:text-sm"
             crumbs={[
@@ -32,7 +31,7 @@ function CheckoutScreen() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-8 sm:py-12 md:py-16">
         <h1 className="text-2xl sm:text-3xl font-medium mb-8">Billing Details</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
@@ -41,42 +40,42 @@ function CheckoutScreen() {
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name*</Label>
-                <Input id="firstName" className="h-12 bg-[#F5F5F5] border-none rounded-sm" required />
+                <Input id="firstName" className="h-12 bg-surface border-none rounded-sm" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name*</Label>
-                <Input id="lastName" className="h-12 bg-[#F5F5F5] border-none rounded-sm" required />
+                <Input id="lastName" className="h-12 bg-surface border-none rounded-sm" required />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="companyName">Company Name</Label>
-              <Input id="companyName" className="h-12 bg-[#F5F5F5] border-none rounded-sm" />
+              <Input id="companyName" className="h-12 bg-surface border-none rounded-sm" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="streetAddress">Street Address*</Label>
-              <Input id="streetAddress" className="h-12 bg-[#F5F5F5] border-none rounded-sm" required />
+              <Input id="streetAddress" className="h-12 bg-surface border-none rounded-sm" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="apartment">Apartment, floor, etc. (optional)</Label>
-              <Input id="apartment" className="h-12 bg-[#F5F5F5] border-none rounded-sm" />
+              <Input id="apartment" className="h-12 bg-surface border-none rounded-sm" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="townCity">Town/City*</Label>
-              <Input id="townCity" className="h-12 bg-[#F5F5F5] border-none rounded-sm" required />
+              <Input id="townCity" className="h-12 bg-surface border-none rounded-sm" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number*</Label>
-              <Input id="phone" type="tel" className="h-12 bg-[#F5F5F5] border-none rounded-sm" required />
+              <Input id="phone" type="tel" className="h-12 bg-surface border-none rounded-sm" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email Address*</Label>
-              <Input id="email" type="email" className="h-12 bg-[#F5F5F5] border-none rounded-sm" required />
+              <Input id="email" type="email" className="h-12 bg-surface border-none rounded-sm" required />
             </div>
 
             <div className="flex items-center space-x-2">
@@ -90,13 +89,13 @@ function CheckoutScreen() {
           {/* Order Summary (live from cart) */}
           <div className="space-y-8">
             {cart.items.length === 0 ? (
-              <p className="text-[#666666]">Your cart is empty.</p>
+              <p className="text-muted-text">Your cart is empty.</p>
             ) : (
               <div className="space-y-4">
                 {cart.items.map((item) => (
                   <div key={item.id} className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="relative w-16 h-16 bg-[#F5F5F5]">
+                      <div className="relative w-16 h-16 bg-surface">
                         <img
                           src={item.image}
                           alt={item.name}
@@ -121,7 +120,7 @@ function CheckoutScreen() {
               </div>
               <div className="flex justify-between py-3 border-b">
                 <span>Shipping:</span>
-                <span className="text-[#666666]">{shipping === 0 ? 'Free' : `$${shipping}`}</span>
+                <span className="text-muted-text">{shipping === 0 ? 'Free' : `$${shipping}`}</span>
               </div>
               <div className="flex justify-between py-3">
                 <span>Total:</span>
@@ -150,14 +149,14 @@ function CheckoutScreen() {
 
             {/* Coupon */}
             <div className="flex gap-4">
-              <Input placeholder="Coupon Code" className="h-12 bg-[#F5F5F5] border-none rounded-sm flex-1" />
-              <Button className="h-12 px-6 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm whitespace-nowrap">
+              <Input placeholder="Coupon Code" className="h-12 bg-surface border-none rounded-sm flex-1" />
+              <Button className="h-12 px-6 bg-secondary hover:bg-secondary-hover rounded-sm whitespace-nowrap">
                 Apply Coupon
               </Button>
             </div>
 
             {/* Place Order */}
-            <Button className="w-full h-12 bg-[#DB4444] hover:bg-[#DB4444]/90 rounded-sm">
+            <Button className="w-full h-12 bg-secondary hover:bg-secondary-hover rounded-sm">
               Place Order
             </Button>
           </div>
