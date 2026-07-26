@@ -72,10 +72,11 @@ function ProductCard({
             <Button
               variant="outline"
               size="icon"
-              className={`h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-white ${inWishlist ? 'text-red-500' : ''}`}
+              className={`h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary ${inWishlist ? 'text-secondary' : ''}`}
               onClick={handleToggleWishlist}
+              aria-label={inWishlist ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
             >
-              <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Heart className={`h-4 w-4 sm:h-5 sm:w-5 ${inWishlist ? 'fill-current' : ''}`} />
             </Button>
             <Link
               to={`/product/${product.slug}`}
