@@ -41,9 +41,7 @@ function HeroSection() {
               <Link
                 key={category}
                 to={`/shop?category=${encodeURIComponent(category)}`}
-                className={`flex items-center justify-between text-sm hover:text-gray-600 py-2 px-4 lg:px-0 ${
-                  ''
-                }`}
+                className={`flex items-center justify-between text-sm hover:text-gray-600 py-2 px-4 lg:px-0`}
               >
                 {category}
                 {index < 2 && <ChevronRight className="w-4 h-4" />}
