@@ -1,96 +1,120 @@
 @import "tailwindcss";
 
-/* Tailwind v4 theme configuration. */
-
+/* MIDNIGHT SHOWROOM — design tokens (Tailwind v4 CSS-first).
+   Layered: primitive -> semantic. Components consume semantic. */
 @theme {
   /* Fonts */
   --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-inter: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-poppins: "Poppins", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Satoshi", "Inter", system-ui, sans-serif;
 
-  /* shadcn color tokens (light theme — the only theme the UI uses) */
-  --color-background: #ffffff;
-  --color-foreground: hsl(0 0% 3.9%);
+  /* Primitive: cool blue-tinted midnight scale */
+  --color-midnight:     #070A12;
+  --color-midnight-700: #0C1018;
+  --color-midnight-600: #131826;
+  --color-midnight-500: #1C2333;
+  --color-midnight-400: #2A3344;
+  --color-paper:        #F7F5F0;
+  --color-paper-soft:   #EFEBE2;
+  --color-line:         #DFD9CC;
 
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(0 0% 3.9%);
+  /* Signature gold accent (warm-on-cool) */
+  --color-gold:         #E8B339;
+  --color-gold-hover:   #F0C251;
+  --color-gold-press:   #C9941F;
 
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(0 0% 3.9%);
+  /* Semantic red — sale/urgency ONLY */
+  --color-sale:         #FF4D4D;
+  --color-sale-hover:   #E63B3B;
 
-  --color-primary: #ffffff;
-  --color-primary-foreground: #000000;
+  /* Semantic system */
+  --color-success: #34D399;
+  --color-warning: #F59E0B;
+  --color-error:   #F87171;
+  --color-rating:  #E8B339;
 
-  --color-secondary: #db4444;
-  --color-secondary-foreground: #ffffff;
-  --color-secondary-hover: #c73838;
+  /* Text — warm off-white on cool midnight */
+  --color-content:     #F2EFE8;
+  --color-content-sub: #B9B4A7;
+  --color-content-mut: #7E7A70;
+  --color-content-inv: #0A0D14;
 
-  --color-surface: #f5f5f5;
-  --color-surface-hover: #eeeeee;
-  --color-muted-text: #666666;
-  --color-subtle-text: #777777;
-  --color-body-text: #333333;
-  --color-border-subtle: #e5e5e5;
-  --color-border-strong: #999999;
-  --color-sale-success: #00ff66;
-  --color-stock-success: #00b962;
-  --color-rating: #ffad33;
-  --color-rating-empty: #d4d4d4;
-  --color-countdown: #e07575;
-  --color-promo: #cbe4e8;
-  --color-story: #f4c8d3;
-  --color-icon-muted: #c1c1c1;
-  --color-slider-inactive: #808080;
-  --color-dot-inactive: #d9d9d9;
+  /* Semantic aliases (components use these) */
+  --color-bg:            var(--color-midnight);
+  --color-surface:       var(--color-midnight-700);
+  --color-surface-2:     var(--color-midnight-600);
+  --color-border:        var(--color-midnight-500);
+  --color-border-strong: var(--color-midnight-400);
+  --color-text:          var(--color-content);
+  --color-text-muted:    var(--color-content-sub);
+  --color-text-subtle:   var(--color-content-mut);
+  --color-primary:       var(--color-gold);
+  --color-primary-hover: var(--color-gold-hover);
+  --color-on-primary:    var(--color-content-inv);
+  --color-focus:         var(--color-gold);
+  --color-ring:          var(--color-gold);
 
-  --color-muted: hsl(0 0% 96.1%);
-  --color-muted-foreground: hsl(0 0% 45.1%);
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
 
-  --color-accent: hsl(0 0% 96.1%);
-  --color-accent-foreground: hsl(0 0% 9%);
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(0,0,0,.5), 0 12px 32px rgba(0,0,0,.35);
+  --shadow-pop:  0 12px 40px rgba(0,0,0,.6);
+}
 
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-
-  --color-border: hsl(0 0% 89.8%);
-  --color-input: hsl(0 0% 89.8%);
-  --color-ring: hsl(0 0% 3.9%);
-
-  /* Radius tokens (shadcn derives lg/md/sm from --radius) */
-  --radius-lg: 0.5rem;
-  --radius-md: 0.375rem;
-  --radius-sm: 0.25rem;
-  --radius: 0.5rem;
+/* Satoshi @font-face (self-hosted variable). */
+@font-face {
+  font-family: "Satoshi";
+  src: url("./assets/fonts/Satoshi-Variable.woff2") format("woff2-variations");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("./assets/fonts/Satoshi-VariableItalic.woff2") format("woff2-variations");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: italic;
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-/* Ant Design component adjustments that preserve the store's compact, square aesthetic. */
-.ant-btn:not(.ant-btn-link) {
-  box-shadow: none;
+/* Warm light panel for dense readable content (checkout/legal) */
+@utility surface-paper {
+  background-color: var(--color-paper);
+  color: var(--color-content-inv);
 }
 
-.ant-btn.ant-btn-text:hover {
-  background: var(--color-accent);
+/* Tabular numerals for prices/stats — commerce signature */
+@utility nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
-
-.ant-checkbox .ant-checkbox-inner,
-.ant-radio .ant-radio-inner {
-  border-color: #000;
-}
-
-.ant-breadcrumb,
-.ant-breadcrumb a,
-.ant-breadcrumb-separator {
-  font-size: inherit;
-}
-
