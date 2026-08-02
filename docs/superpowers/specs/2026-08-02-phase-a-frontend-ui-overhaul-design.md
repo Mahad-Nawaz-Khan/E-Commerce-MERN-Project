@@ -30,16 +30,21 @@ Rebuild the storefront UI from scratch as a clean, consistent, responsive, fully
 
 ---
 
-## 2. Design Direction (decided)
+## 2. Design Direction (decided) — "Midnight Showroom"
 
-**Aesthetic: Dark + High Contrast, editorial commerce.**
+**Aesthetic: Dark + High Contrast, distinctive (not the AI default).**
 
-Dark-dominant surfaces (near-black ink, dark-zinc card/section backgrounds) with a vivid red accent for CTAs, badges, prices, and active states. Selective light panels where readability of dense data matters (product detail body, checkout form panels) so the page isn't exhausting to read. Drama comes from contrast, not clutter.
+Per the `frontend-design` skill methodology: the brief pins *dark + contrasty*, but the first instinct (near-black + vermilion red) is exactly AI-default-look #2 ("a near-black background with a single bright acid-green or vermilion accent") — a tell to avoid. The execution is therefore made **distinctive**:
 
-Rationale: you explicitly rejected indigo and asked for dark contrasty colors. Dark + red-on-near-black is maximum WCAG contrast, reuses the brand's red DNA, and signals commerce urgency (deals, sale). This is the Nike / Nothing.tech / modern-launch tier.
+- **Tinted midnight base** — a *cool blue-tinted* near-black (`#070A12`), not neutral zinc. Tinting the black is the deliberate choice that separates it from default near-black.
+- **Gold signature accent** (`#E8B339`) for CTAs, prices, brand marks, active states — warm-on-cool contrast that reads premium/"exclusive." This is the distinctive move; red-on-black was the templated tell.
+- **Red is reserved strictly for sale/urgency/deal semantics** (flash-sale countdown, SALE badges, stock-critical) — two accents, but each with a single clear semantic job. Disciplined, not decorative.
+- **Warm off-white text** (`#F2EFE8`) on cool midnight — a subtle warm/cool tension that reads intentional vs. neutral zinc-on-zinc.
+- Selective warm **paper panels** (`#F7F5F0`) where dense data readability matters (checkout form, legal content) so the page isn't exhausting.
 
-### Accent fallback noted
-If the red-on-dark ever reads too "old retail," an electric lime (`#A3E635`) was offered as a 2026/techy alternative; not chosen unless you say so.
+**Signature element (the one memorable thing):** the *showroom product card*. Products sit on the midnight stage like showcased specimens — generous negative space, a 1px gold hairline frame that lights up on hover, price set in distinctive tabular numerals. The hero is a "featured drop" where the **product is the thesis** (not a big headline + gradient), with a launch-style countdown.
+
+Rationale chain: brief = dark + contrasty (honored); brand = "Exclusive" (gold/midnight sells exclusivity); subject = electronics/lifestyle retail (suits a cool, technical, premium-device aesthetic — Apple space-grey, Nothing, Sony product pages). One real aesthetic risk taken: warm-gold-on-cool-midnight with a dual-accent semantic system. Restraint everywhere else.
 
 ---
 
@@ -49,63 +54,85 @@ Per 2026 guidance: tokens live in `src/index.css` `@theme` as native CSS variabl
 
 ### Primitive (raw values, rarely used directly)
 ```
---color-ink:        #0A0A0B   (near-black, text + dark sections)
---color-ink-soft:   #18181B   (zinc-900, raised dark surfaces)
---color-ink-muted:  #27272A   (zinc-800, borders/dividers on dark)
---color-paper:      #FAFAFA   (light panel, used sparingly)
---color-paper-soft: #F4F4F5   (zinc-100)
---color-line:       #E4E4E7   (zinc-200, borders on light)
---color-line-soft:  #D4D4D8   (zinc-300)
+/* Cool blue-tinted midnight scale — NOT neutral zinc (the deliberate move) */
+--color-midnight:     #070A12   /* page background */
+--color-midnight-700: #0C1018   /* raised surface (cards) */
+--color-midnight-600: #131826   /* inputs, hover surface */
+--color-midnight-500: #1C2333   /* dividers / hairlines on dark */
+--color-midnight-400: #2A3344   /* strong border on dark */
 
---color-accent:     #FF4D4D   (primary accent / red)
---color-accent-hover:#E63B3B
---color-accent-soft:#FFD4D4   (tints/badges)
---color-accent-ink: #2A0606   (accent-on-dark contrast text)
+--color-paper:        #F7F5F0   /* warm off-white light panel */
+--color-paper-soft:   #EFEBE2
+--color-line:         #DFD9CC   /* borders on light panels */
 
---color-success:    #22C55E
---color-warning:    #F59E0B
---color-error:      #EF4444
---color-rating:     #F5A524
+/* Signature gold accent (warm-on-cool) */
+--color-gold:         #E8B339   /* primary accent: CTA, price, brand, active */
+--color-gold-hover:   #F0C251
+--color-gold-press:   #C9941F
+--color-gold-soft:    rgba(232,179,57,.14)   /* tints, focus halos */
 
---color-content:    #FAFAFA   (default text color on dark bg)
---color-content-sub:#A1A1AA   (zinc-400, secondary text)
---color-content-mut:#71717A   (zinc-500, muted text)
+/* Semantic red — sale/urgency ONLY (single job) */
+--color-sale:         #FF4D4D
+--color-sale-hover:   #E63B3B
+--color-sale-soft:    rgba(255,77,77,.14)
+
+/* Semantic system */
+--color-success:      #34D399
+--color-warning:      #F59E0B
+--color-error:        #F87171
+--color-rating:       #E8B339   /* ratings share the gold, by design */
+
+/* Text — warm off-white on cool midnight (intentional warm/cool tension) */
+--color-content:      #F2EFE8   /* primary text on dark */
+--color-content-sub:  #B9B4A7   /* secondary text */
+--color-content-mut:  #7E7A70   /* muted text */
+--color-content-inv:  #0A0D14   /* text on gold/paper */
 ```
 
 ### Semantic (purpose-based — what components consume)
 ```
---color-bg:           var(--color-ink)        /* page background */
---color-surface:      var(--color-ink-soft)   /* cards, panels */
---color-surface-2:    var(--color-ink-muted)  /* inputs, raised */
---color-border:       var(--color-ink-muted)
---color-text:         var(--color-content)
---color-text-muted:   var(--color-content-sub)
---color-text-subtle:  var(--color-content-mut)
---color-primary:      var(--color-accent)
---color-primary-hover:var(--color-accent-hover)
---color-focus:        var(--color-accent)
---color-ring:         var(--color-accent)
+--color-bg:            var(--color-midnight)
+--color-surface:       var(--color-midnight-700)
+--color-surface-2:     var(--color-midnight-600)
+--color-border:        var(--color-midnight-500)
+--color-border-strong: var(--color-midnight-400)
+--color-text:          var(--color-content)
+--color-text-muted:    var(--color-content-sub)
+--color-text-subtle:   var(--color-content-mut)
+--color-primary:       var(--color-gold)
+--color-primary-hover: var(--color-gold-hover)
+--color-focus:         var(--color-gold)
+--color-ring:          var(--color-gold)
+--color-on-primary:    var(--color-content-inv)
+/* sale/urgency semantic — use ONLY for deal/stock-critical */
+--color-sale:          var(--color-sale)
+--color-sale-hover:    var(--color-sale-hover)
 ```
 
 ### Radii, typography, spacing, shadows, motion
 ```
 --radius-sm: 6px   --radius-md: 10px   --radius-lg: 16px   --radius-full: 9999px
---font-sans: "Inter Variable", system-ui, sans-serif
---shadow-card:    0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.25)
---shadow-pop:     0 8px 32px rgba(0,0,0,.55)
---ease-out:       cubic-bezier(.16,1,.3,1)
+--font-display: "Satoshi", system-ui, sans-serif   /* headings, prices, brand */
+--font-sans:    "Inter", system-ui, sans-serif      /* body, UI */
+--shadow-card:  0 1px 2px rgba(0,0,0,.5), 0 12px 32px rgba(0,0,0,.35)
+--shadow-pop:   0 12px 40px rgba(0,0,0,.6)
+--ease-out:     cubic-bezier(.16,1,.3,1)
 --dur-fast:140ms --dur-base:200ms --dur-slow:300ms
 ```
 
-Dark mode is the default; a light "panel" utility (`.surface-paper`) is used inside detail/checkout for readable forms.
+Dark mode is the default; a warm `.surface-paper` panel utility is used inside detail/checkout/legal for readable forms.
 
 ---
 
 ## 4. Typography
 
-- **Inter only** (variable, self-hosted — already installed via `@fontsource-variable/inter`; if the installed package is non-variable `@fontsource/inter`, standard weights 400/500/600/700/800 are used). Single typeface used well > two mediocre ones.
-- **Drop Poppins** (overused, slightly dated, redundant payload).
-- Display scale via Tailwind fluid utilities: tight tracking (`tracking-tight`) on headings, heavy weights for hero. No fractional/unusual font-size utilities.
+Per the `frontend-design` skill ("pair the display and body faces deliberately, not the same families you would reach for on any other project"). Inter-only was rejected as a default reach.
+
+- **Display — Satoshi** (Fontshare, self-hosted; weights 500/700/900). Used for the wordmark, section/page titles, hero headlines, and **prices** (Satoshi's tabular numerals give the commerce UI its characterful signature).
+- **Body — Inter** (already installed; weights 400/500/600). Body copy, UI labels, forms, buttons.
+- **Drop Poppins** (overused, redundant payload).
+- Deliberate type scale: tight tracking (`tracking-tight`/`tracking-tighter`) + heavy Satoshi weights for display; relaxed Inter for body. Prices and stats use Satoshi 700 with `font-variant-numeric: tabular-nums` for stable alignment in grids.
+- No fractional/unusual font-size utilities — fluid clamp-based display sizes via standard Tailwind scale.
 
 ---
 
@@ -113,7 +140,7 @@ Dark mode is the default; a light "panel" utility (`.surface-paper`) is used ins
 
 **Pattern:** `class-variance-authority` (CVA) + `clsx` + `tailwind-merge` behind a `cn()` helper — the de-facto 2026 standard for variant components. Complex primitives use **compound components** (Context-based) for flexible composition.
 
-New deps to add: `class-variance-authority`, `clsx`, `tailwind-merge`, `@radix-ui/react-slot` (for polymorphic `asChild` Button/Link). `lucide-react` stays for icons.
+New deps to add: `class-variance-authority`, `clsx`, `tailwind-merge`, `@radix-ui/react-slot` (for polymorphic `asChild` Button/Link). `lucide-react` stays for icons. **Satoshi font** is self-hosted from Fontshare (downloaded woff2 into `src/assets/fonts/`, `@font-face` in `index.css`) — no npm package needed. **Inter** stays (already installed via `@fontsource/inter`).
 
 ### Design-system primitives (`src/components/ui/`)
 Each gets its own file + a typed variants config:
@@ -213,7 +240,7 @@ src/
 
 - Mobile-first responsive at every breakpoint; tested down to 360px.
 - All interactive primitives keyboard-accessible (focus-visible rings using `--color-ring`), correct ARIA roles for custom Select/Tabs/Dialog/Drawer.
-- WCAG AA contrast on dark+red palette (verified: `#FF4D4D` on `#0A0A0B` ≈ 5.9:1; text `#FAFAFA` on `#0A0A0B` ≈ 19:1).
+- WCAG AA contrast on the midnight+gold palette (verified: gold `#E8B339` on midnight `#070A12` ≈ 8.9:1; text `#F2EFE8` on `#070A12` ≈ 17:1; sale red `#FF4D4D` on `#070A12` ≈ 5.4:1).
 - Semantic HTML, alt text on all imagery, `prefers-reduced-motion` respected for hover/transition effects.
 
 ---
