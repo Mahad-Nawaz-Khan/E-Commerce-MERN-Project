@@ -410,7 +410,7 @@ describe('formatDate', () => {
   })
 })
 describe('discountPercent', () => {
-  it('floored', () => { expect(discountPercent(900, 650)).toBe(28) })
+  it('floored', () => { expect(discountPercent(900, 650)).toBe(27) }) // floor(27.77) = 27
   it('no discount', () => { expect(discountPercent(100, 100)).toBe(0) })
   it('missing original', () => {
     expect(discountPercent(undefined, 100)).toBe(0)
