@@ -1,168 +1,92 @@
-import { Input } from '../components/ui/Input'
-import { Label } from '../components/ui/Label'
-import { Button } from '../components/ui/Button'
-import { RadioGroup, RadioGroupItem } from '../components/ui/RadioGroup'
-import { Checkbox } from '../components/ui/Checkbox'
-import { Breadcrumb } from '../components/ui/Breadcrumb'
-import { useCart } from '../hooks/useCart'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Container, Button, Input, RadioGroup, Breadcrumb, EmptyState } from '../components/ui'
+import { useCart } from '../hooks'
+import { SHIPPING_FEE, FREE_SHIP_THRESHOLD } from '../lib/constants'
+import { formatPrice } from '../lib/format'
+import toast from 'react-hot-toast'
+import { ShoppingBag } from 'lucide-react'
 
-/**
- * Checkout route — billing form on the left, live order summary on the right.
- * The order summary
- * is computed from the actual Redux cart.
- */
+const empty = { name: '', email: '', address: '', city: '', zip: '', country: '' }
+
+/** Checkout route — validated shipping form + payment choice + order confirmation. */
 function CheckoutScreen() {
-  const cart = useCart()
-  const shipping = 0 // free
+  const { items, subtotal, clear } = useCart()
+  const [form, setForm] = useState(empty)
+  const [payment, setPayment] = useState('card')
+  const [errors, setErrors] = useState({})
+  const [placed, setPlaced] = useState(null) // { id, total, email }
+
+  const shipping = subtotal >= FREE_SHIP_THRESHOLD ? 0 : SHIPPING_FEE
+  const total = subtotal + shipping
+
+  if (items.length === 0 && !placed) {
+    return <Container className="py-16"><EmptyState icon={ShoppingBag} title="Nothing to check out" description="Your cart is empty." action={<Button asChild><Link to="/shop">Shop now</Link></Button>} /></Container>
+  }
+  if (placed) {
+    return (
+      <Container className="py-16 text-center">
+        <p className="font-display text-5xl font-black text-[var(--color-primary)]">✓</p>
+        <h1 className="mt-4 font-display text-3xl font-black text-[var(--color-text)]">Order confirmed</h1>
+        <p className="mt-2 text-sm text-[var(--color-text-muted)]">Order <span className="nums text-[var(--color-text)]">{placed.id}</span> — {formatPrice(placed.total)}. A confirmation is on its way to {placed.email}.</p>
+        <Button asChild className="mt-6"><Link to="/shop">Continue shopping</Link></Button>
+      </Container>
+    )
+  }
+  function set(k, v) { setForm((f) => ({ ...f, [k]: v })) }
+  function validate() {
+    const e = {}
+    if (!form.name.trim()) e.name = 'Required'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Valid email required'
+    if (!form.address.trim()) e.address = 'Required'
+    if (!form.city.trim()) e.city = 'Required'
+    if (!form.zip.trim()) e.zip = 'Required'
+    if (!form.country.trim()) e.country = 'Required'
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+  function placeOrder(e) {
+    e.preventDefault()
+    if (!validate()) { toast.error('Please fix the highlighted fields.'); return }
+    const id = 'EX-' + Math.random().toString(36).slice(2, 8).toUpperCase()
+    setPlaced({ id, total, email: form.email })
+    clear()
+    toast.success('Order placed!')
+  }
 
   return (
-    <div className="font-inter min-h-screen bg-white">
-      {/* Breadcrumb */}
-      <div className="mt-10">
-        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
-          <Breadcrumb
-            className="text-1.75 md:text-sm"
-            crumbs={[
-              { label: 'Home', to: '/' },
-              { label: 'Cart', to: '/cart' },
-              { label: 'Checkout' },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-8 sm:py-12 md:py-16">
-        <h1 className="text-2xl sm:text-3xl font-medium mb-8">Billing Details</h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-          {/* Billing Form */}
-          <div className="space-y-6">
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name*</Label>
-                <Input id="firstName" className="h-12 bg-surface border-none rounded-sm" required />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name*</Label>
-                <Input id="lastName" className="h-12 bg-surface border-none rounded-sm" required />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="companyName">Company Name</Label>
-              <Input id="companyName" className="h-12 bg-surface border-none rounded-sm" />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="streetAddress">Street Address*</Label>
-              <Input id="streetAddress" className="h-12 bg-surface border-none rounded-sm" required />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="apartment">Apartment, floor, etc. (optional)</Label>
-              <Input id="apartment" className="h-12 bg-surface border-none rounded-sm" />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="townCity">Town/City*</Label>
-              <Input id="townCity" className="h-12 bg-surface border-none rounded-sm" required />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number*</Label>
-              <Input id="phone" type="tel" className="h-12 bg-surface border-none rounded-sm" required />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address*</Label>
-              <Input id="email" type="email" className="h-12 bg-surface border-none rounded-sm" required />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox id="saveInfo" />
-              <label htmlFor="saveInfo" className="text-sm font-medium leading-none">
-                Save this information for faster check-out next time
-              </label>
-            </div>
+    <Container className="py-8">
+      <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'Cart', to: '/cart' }, { label: 'Checkout' }]} className="mb-4" />
+      <h1 className="mb-6 font-display text-3xl font-black tracking-tight text-[var(--color-text)]">Checkout</h1>
+      <form onSubmit={placeOrder} className="grid gap-8 lg:grid-cols-[1fr_360px]">
+        <div className="surface-paper space-y-4 rounded-lg p-6">
+          <h2 className="font-display text-lg font-bold text-[var(--color-content-inv)]">Shipping details</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Input label="Full name" value={form.name} onChange={(e) => set('name', e.target.value)} error={errors.name} />
+            <Input label="Email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)} error={errors.email} />
+            <Input label="Address" value={form.address} onChange={(e) => set('address', e.target.value)} error={errors.address} className="sm:col-span-2" />
+            <Input label="City" value={form.city} onChange={(e) => set('city', e.target.value)} error={errors.city} />
+            <Input label="ZIP / Postal" value={form.zip} onChange={(e) => set('zip', e.target.value)} error={errors.zip} />
+            <Input label="Country" value={form.country} onChange={(e) => set('country', e.target.value)} error={errors.country} className="sm:col-span-2" />
           </div>
-
-          {/* Order Summary (live from cart) */}
-          <div className="space-y-8">
-            {cart.items.length === 0 ? (
-              <p className="text-muted-text">Your cart is empty.</p>
-            ) : (
-              <div className="space-y-4">
-                {cart.items.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-16 h-16 bg-surface">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="absolute inset-0 w-full h-full object-contain p-2"
-                        />
-                      </div>
-                      <span className="font-medium">
-                        {item.name} × {item.quantity}
-                      </span>
-                    </div>
-                    <span className="font-medium">${item.price * item.quantity}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Totals */}
-            <div className="space-y-4">
-              <div className="flex justify-between py-3 border-b">
-                <span>Subtotal:</span>
-                <span>${cart.subtotal}</span>
-              </div>
-              <div className="flex justify-between py-3 border-b">
-                <span>Shipping:</span>
-                <span className="text-muted-text">{shipping === 0 ? 'Free' : `$${shipping}`}</span>
-              </div>
-              <div className="flex justify-between py-3">
-                <span>Total:</span>
-                <span>${cart.subtotal + shipping}</span>
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-            <RadioGroup defaultValue="cod" className="space-y-4">
-              <div className="flex items-center justify-between space-x-2 p-4 border rounded-sm">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="bank" id="bank" />
-                  <Label htmlFor="bank">Bank</Label>
-                </div>
-                <div className="flex gap-2">
-                  <img src="/images/payments/visa.svg" alt="Visa" width={40} height={28} />
-                  <img src="/images/payments/mastercard.svg" alt="Mastercard" width={40} height={18} />
-                  <img src="/images/payments/bkash.svg" alt="bKash" width={60} height={28} />
-                </div>
-              </div>
-              <div className="flex items-center space-x-2 p-4 border rounded-sm">
-                <RadioGroupItem value="cod" id="cod" />
-                <Label htmlFor="cod">Cash on delivery</Label>
-              </div>
-            </RadioGroup>
-
-            {/* Coupon */}
-            <div className="flex gap-4">
-              <Input placeholder="Coupon Code" className="h-12 bg-surface border-none rounded-sm flex-1" />
-              <Button className="h-12 px-6 bg-secondary hover:bg-secondary-hover rounded-sm whitespace-nowrap">
-                Apply Coupon
-              </Button>
-            </div>
-
-            {/* Place Order */}
-            <Button className="w-full h-12 bg-secondary hover:bg-secondary-hover rounded-sm">
-              Place Order
-            </Button>
-          </div>
+          <div className="pt-2"><RadioGroup label="Payment" value={payment} onChange={setPayment} options={[{ value: 'card', label: 'Credit / Debit card' }, { value: 'cod', label: 'Cash on delivery' }]} /></div>
         </div>
-      </div>
-    </div>
+        <aside className="h-fit space-y-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+          <h2 className="font-display text-lg font-bold text-[var(--color-text)]">Your order</h2>
+          <ul className="space-y-2 text-sm">
+            {items.map((i) => (
+              <li key={i.id} className="flex justify-between"><span className="text-[var(--color-text-muted)]">{i.name} × {i.quantity}</span><span className="nums">{formatPrice(i.price * i.quantity)}</span></li>
+            ))}
+          </ul>
+          <dl className="space-y-2 border-t border-[var(--color-border)] pt-3 text-sm">
+            <div className="flex justify-between"><dt className="text-[var(--color-text-muted)]">Subtotal</dt><dd className="nums">{formatPrice(subtotal)}</dd></div>
+            <div className="flex justify-between"><dt className="text-[var(--color-text-muted)]">Shipping</dt><dd className="nums">{shipping === 0 ? 'Free' : formatPrice(shipping)}</dd></div>
+            <div className="flex justify-between font-display text-base font-bold"><dt>Total</dt><dd className="nums">{formatPrice(total)}</dd></div>
+          </dl>
+          <Button type="submit" variant="sale" className="w-full">Place order</Button>
+        </aside>
+      </form>
+    </Container>
   )
 }
 
