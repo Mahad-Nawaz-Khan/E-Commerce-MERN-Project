@@ -1,8 +1,5 @@
 import { useMemo } from 'react'
-import {
-  getProductSummaries,
-  getProductSummariesByTag,
-} from '../data/products'
+import { getProductSummaries, getProductSummariesByTag } from '../data/products'
 
 /**
  * Static product summary hook for product-card grids (Flash Sales, Best
