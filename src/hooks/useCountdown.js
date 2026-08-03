@@ -28,8 +28,10 @@ function getTimeLeft(target) {
 export function useCountdown(target) {
   const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(target))
 
+  // The initial value is computed lazily by useState above, so the effect only
+  // needs to own the 1s interval. (target is frozen for the component's
+  // lifetime via useStableTarget, so no synchronous resync is needed here.)
   useEffect(() => {
-    setTimeLeft(getTimeLeft(target))
     const id = setInterval(() => setTimeLeft(getTimeLeft(target)), 1000)
     return () => clearInterval(id)
   }, [target])
