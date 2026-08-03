@@ -1,59 +1,114 @@
-import { Link } from 'react-router-dom'
-import { Button } from '../components/ui/Button'
-import { InputUnderline } from '../components/ui/InputUnderline'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
+import { Sparkles, UserPlus } from 'lucide-react'
+import { Button, Input } from '../components/ui'
+import { loginSuccess } from '../features/auth'
 
-/** Sign-up route — split layout: promo image left, create-account form right. */
+const empty = { name: '', email: '', password: '', confirm: '' }
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** Sign-up route — split layout: midnight promo panel left, validated create-account form right. */
 function SignUpScreen() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [form, setForm] = useState(empty)
+  const [errors, setErrors] = useState({})
+
+  function set(k, v) { setForm((f) => ({ ...f, [k]: v })) }
+
+  function validate() {
+    const e = {}
+    if (form.name.trim().length < 2) e.name = 'Please enter your name'
+    if (!emailRe.test(form.email)) e.email = 'Enter a valid email address'
+    if (form.password.length < 6) e.password = 'At least 6 characters'
+    if (form.confirm !== form.password) e.confirm = 'Passwords do not match'
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+
+  function submit(e) {
+    e.preventDefault()
+    if (!validate()) { toast.error('Please fix the highlighted fields.'); return }
+    dispatch(loginSuccess({ email: form.email, name: form.name.trim() }))
+    toast.success('Account created — welcome to Exclusive!')
+    navigate('/')
+  }
+
   return (
-    <div className="font-inter min-h-screen grid lg:grid-cols-2 my-10">
-      {/* Left Side - Image */}
-      <div className="hidden lg:block relative bg-promo">
-        <div className="absolute inset-0 flex items-center justify-center p-12">
-          <img
-            src="/images/signup-image.png"
-            alt="Shopping Cart with Phone"
-            className="object-contain max-w-full max-h-full"
-          />
+    <div className="grid min-h-[calc(100vh-4rem)] lg:grid-cols-2">
+      {/* Left — promo panel */}
+      <div className="relative hidden flex-col justify-between overflow-hidden border-r border-[var(--color-border)] bg-[var(--color-surface)] p-12 lg:flex">
+        <div className="pointer-events-none absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-[var(--color-primary)]/10 blur-3xl" />
+        <div className="relative">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] px-3 py-1 text-xs font-medium text-[var(--color-primary)]">
+            <Sparkles className="h-3.5 w-3.5" /> Join Exclusive
+          </span>
         </div>
+        <div className="relative max-w-md">
+          <h2 className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--color-text)]">
+            Create your pass to the <span className="text-[var(--color-primary)]">showroom.</span>
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
+            Faster checkout, saved wishlists, order tracking, and first access to flash sales and new drops.
+          </p>
+        </div>
+        <p className="relative text-xs text-[var(--color-text-subtle)]">Members get free delivery over the ship threshold.</p>
       </div>
 
-      {/* Right Side - Form */}
+      {/* Right — form */}
       <div className="flex items-center justify-center p-6 lg:p-12">
-        <div className="w-full max-w-92.5 space-y-8">
-          <div className="space-y-3">
-            <h1 className="text-8.5 font-medium tracking-tight">Create an account</h1>
-            <p className="text-base text-gray-600">Enter your details below</p>
-          </div>
+        <div className="w-full max-w-sm">
+          <h1 className="font-display text-3xl font-black tracking-tight text-[var(--color-text)]">Create an account</h1>
+          <p className="mt-2 text-sm text-[var(--color-text-muted)]">Enter your details below</p>
 
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-            <InputUnderline label="Name" />
-            <InputUnderline label="Email or Phone Number" />
-            <InputUnderline type="password" label="Password" />
-            <Button
-              type="submit"
-              className="h-12! w-full! rounded-sm! bg-secondary! text-base! text-secondary-foreground! font-normal! hover:bg-secondary-hover!"
-            >
-              Create Account
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-12! w-full! rounded-sm! border-border-strong! bg-primary! text-base! font-normal! text-black! shadow-none! hover:border-black! hover:bg-primary!"
-            >
-              <img src="/images/logos/google.svg" alt="Google" className="mr-2 h-4 w-4" />
-              Sign up with Google
+          <form onSubmit={submit} className="mt-8 space-y-4">
+            <Input
+              label="Name"
+              autoComplete="name"
+              placeholder="Your name"
+              value={form.name}
+              onChange={(e) => set('name', e.target.value)}
+              error={errors.name}
+            />
+            <Input
+              label="Email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={(e) => set('email', e.target.value)}
+              error={errors.email}
+            />
+            <Input
+              label="Password"
+              type="password"
+              autoComplete="new-password"
+              placeholder="At least 6 characters"
+              value={form.password}
+              onChange={(e) => set('password', e.target.value)}
+              error={errors.password}
+            />
+            <Input
+              label="Confirm password"
+              type="password"
+              autoComplete="new-password"
+              placeholder="Re-enter your password"
+              value={form.confirm}
+              onChange={(e) => set('confirm', e.target.value)}
+              error={errors.confirm}
+            />
+
+            <Button type="submit" className="w-full">
+              <UserPlus className="h-4 w-4" /> Create account
             </Button>
           </form>
 
-          <div className="text-center text-base">
-            Already have account?{' '}
-            <Link
-              to="/login"
-              className="text-secondary hover:text-secondary/90 font-medium underline"
-            >
-              Log in
-            </Link>
-          </div>
+          <p className="mt-6 text-center text-sm text-[var(--color-text-muted)]">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-[var(--color-primary)] hover:underline">Log in</Link>
+          </p>
         </div>
       </div>
     </div>
