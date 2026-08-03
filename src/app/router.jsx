@@ -13,7 +13,6 @@ import { NotFoundScreen } from '../screens/NotFoundScreen'
 import { ShopScreen } from '../screens/ShopScreen'
 import { ContentPage } from '../screens/ContentPage'
 import { FaqScreen } from '../screens/FaqScreen'
-import { AdminScreen } from '../screens/AdminScreen'
 import { policySections, termsSections } from '../data/siteContent'
 
 export function AppRouter() {
@@ -33,7 +32,6 @@ export function AppRouter() {
         <Route path="/privacy-policy" element={<ContentPage title="Privacy Policy" intro="This policy explains what information Exclusive collects and how we use and protect it." sections={policySections} />} />
         <Route path="/terms-of-use" element={<ContentPage title="Terms of Use" intro="These terms describe the rules that apply when you browse, shop, or create an account with Exclusive." sections={termsSections} />} />
         <Route path="/faq" element={<FaqScreen />} />
-        <Route path="/admin" element={<AdminScreen />} />
         <Route path="*" element={<NotFoundScreen />} />
       </Route>
     </Routes>
