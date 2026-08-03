@@ -1,9 +1,9 @@
-import { OurStory } from '../components/about/OurStory'
-import { SiteStats } from '../components/about/SiteStats'
-import { TeamMembers } from '../components/about/TeamMembers'
-import { ServiceFeatures } from '../components/home/ServiceFeatures'
+import { OurStory } from '../components/about/our-story'
+import { SiteStats } from '../components/about/site-stats'
+import { TeamMembers } from '../components/about/team-members'
+import { ServiceFeatures } from '../components/about/service-features'
 
-/** About route — OurStory + SiteStats + TeamMembers + ServiceFeatures. */
+/** About route — story, stats, team, and service guarantees in the Midnight Showroom theme. */
 function AboutScreen() {
   return (
     <div>
