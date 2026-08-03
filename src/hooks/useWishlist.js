@@ -3,8 +3,8 @@ import {
   toggleWishlist,
   removeFromWishlist,
   clearWishlist,
-} from '../store/slices/wishlistSlice'
-import { addToCart } from '../store/slices/cartSlice'
+} from '../features/wishlist'
+import { addToCart } from '../features/cart'
 
 /**
  * Wishlist selector hook — exposes wishlist state plus bound action dispatchers.
