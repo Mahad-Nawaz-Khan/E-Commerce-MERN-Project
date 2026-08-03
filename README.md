@@ -1,16 +1,68 @@
-# React + Vite
+# Exclusive — Midnight Showroom
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Exclusive** is a modern e-commerce storefront UI built as a from-scratch rebuild of a legacy Ant Design app. The interface is a dark "Midnight Showroom" aesthetic: a cool, blue-tinted midnight base palette, a single warm **gold** signature accent, and **red** reserved strictly for sale and urgency (price drops, countdowns, out-of-stock). Typography pairs **Satoshi** (self-hosted variable, for display/headings) with **Inter** (for body). Every screen, primitive, and interaction was rebuilt with Tailwind CSS v4 and class-variance-authority — no component library. Cart and wishlist persist to `localStorage`, and all flows (filters, sort, pagination, search, cart math, coupon validation) are fully functional against in-memory mock data.
 
-Currently, two official plugins are available:
+> Phase A (this frontend UI overhaul) is complete. Phase B (Node/Express/MongoDB backend) and Phase C (frontend↔backend integration with RTK Query, real auth and checkout) are separate upcoming phases.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech stack
 
-## React Compiler
+- **React 19** + **Vite 8** (Rolldown-powered)
+- **Tailwind CSS v4** (CSS-first `@theme` tokens via `@tailwindcss/vite`)
+- **Redux Toolkit 2** + **react-redux** (feature-folder slices, `localStorage` persistence)
+- **react-router-dom 7**
+- **class-variance-authority** + **clsx** + **tailwind-merge** (`cn()` helper)
+- **@radix-ui/react-slot** (for the polymorphic `Button asChild`)
+- **lucide-react** (icons)
+- **react-hot-toast**
+- **@fontsource/inter** (self-hosted Satoshi woff2 in `src/assets/fonts/`)
+- **Vitest 4** (logic tests, node environment — no DOM)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Scripts
 
-## Expanding the ESLint configuration
+| Command               | Description                          |
+| --------------------- | ------------------------------------ |
+| `npm run dev`         | Start the Vite dev server (HMR)      |
+| `npm run build`       | Production build to `dist/`          |
+| `npm run preview`     | Preview the production build locally |
+| `npm run lint`        | Run ESLint                           |
+| `npm test`            | Run the Vitest suite once            |
+| `npm run test:watch`  | Run tests in watch mode              |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Folder structure
+
+```
+frontend/
+├── src/
+│   ├── app/                  # App shell: store, providers, router
+│   │   ├── store.js          #   Redux store + localStorage persistence
+│   │   ├── providers.jsx     #   Redux -> Router -> Toaster
+│   │   └── router.jsx        #   Route table (MainLayout + 13 routes)
+│   ├── components/
+│   │   ├── ui/               # Design-system primitives (CVA, barrel index.js)
+│   │   ├── layout/           # Navbar, Footer, MainLayout, mobile drawers
+│   │   ├── product/          # ProductCard, ProductGrid, gallery, etc.
+│   │   ├── home/             # HeroSection, FlashSales, category rails
+│   │   └── about/            # About-page sections
+│   ├── features/             # Feature folders (Redux)
+│   │   ├── cart/             #   cartSlice + cart-drawer component
+│   │   ├── wishlist/         #   wishlistSlice
+│   │   ├── ui/               #   uiSlice (drawers, mobile nav)
+│   │   ├── auth/             #   authSlice (mock user)
+│   │   └── shop/             #   selectors (filter/sort/paginate)
+│   ├── screens/              # Route-level screens (thin compositions)
+│   ├── data/                 # Mock data (products, categories, coupons, reviews)
+│   ├── lib/                  # cn(), formatters, constants
+│   ├── hooks/                # useCountdown, useMediaQuery, useDebounce, useProducts…
+│   ├── assets/fonts/         # Self-hosted Satoshi woff2
+│   ├── main.jsx              # Entry point
+│   └── index.css             # Midnight Showroom tokens (@theme)
+├── tests/                    # Vitest — lib/, features/, data/
+├── vitest.config.js
+└── package.json
+```
+
+## Roadmap
+
+- **Phase A — Frontend UI overhaul (this repository, complete):** Rebuilt the storefront from scratch as a distinctive dark "Midnight Showroom" UI with a Tailwind v4 token system, a full set of CVA design-system primitives, feature-folder Redux state with `localStorage` persistence, expanded mock data, and 13 fully-functional routes. Fully antd-free. Build, lint (0 errors), and tests (42 passing) all green.
+- **Phase B — Backend (upcoming):** Node/Express/MongoDB API with real product, user, order, and auth endpoints.
+- **Phase C — Integration (upcoming):** Connect this frontend to the backend via RTK Query, replacing mock data and `localStorage` with real auth, product feeds, cart sync, and checkout.
