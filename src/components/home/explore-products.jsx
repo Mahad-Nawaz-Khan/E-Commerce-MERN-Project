@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Section, Container, Button, ProductGrid } from '../ui'
+import { Section, Container, Button } from '../ui'
+import { ProductGrid } from '../product/product-grid'
 import { useProducts } from '../../hooks'
 
 const PAGE_SIZE = 8

@@ -1,4 +1,4 @@
-import { Linkedin, Instagram, Twitter } from 'lucide-react'
+import { Globe, AtSign, MessageCircle } from 'lucide-react'
 import { Container, Avatar } from '../ui'
 
 const teamMembers = [
@@ -8,9 +8,9 @@ const teamMembers = [
 ]
 
 const socials = [
-  { Icon: Twitter, label: 'Twitter' },
-  { Icon: Instagram, label: 'Instagram' },
-  { Icon: Linkedin, label: 'LinkedIn' },
+  { Icon: Globe, label: 'Website' },
+  { Icon: AtSign, label: 'Social handle' },
+  { Icon: MessageCircle, label: 'Direct message' },
 ]
 
 /** Team grid — three members with avatar fallbacks + social links on midnight cards. */

@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
-import { Container, Breadcrumb, Select, Switch, Pagination, EmptyState, ProductGrid } from '../components/ui'
+import { Container, Breadcrumb, Select, Switch, Pagination, EmptyState } from '../components/ui'
+import { ProductGrid } from '../components/product/product-grid'
 import { getProductSummaries } from '../data/products'
 import { categories } from '../data/categories'
 import { applyShopQuery } from '../features/shop'

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Section, Container, Button, ProductGrid } from '../ui'
+import { Section, Container, Button } from '../ui'
+import { ProductGrid } from '../product/product-grid'
 import { useProducts, useCountdown, useStableTarget } from '../../hooks'
 import { Flame } from 'lucide-react'
 
