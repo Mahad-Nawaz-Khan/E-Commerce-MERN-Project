@@ -1,31 +1,25 @@
-import { ChevronDown } from 'lucide-react'
-import { Breadcrumb } from '../components/ui/Breadcrumb'
+import { Container, Breadcrumb, Accordion } from '../components/ui'
 import { faqs } from '../data/siteContent'
 
+/** FAQ route — Accordion primitive backed by the faqs data. */
 function FaqScreen() {
   return (
-    <div className="bg-white">
-      <div className="w-full px-4 py-10 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
-        <Breadcrumb crumbs={[{ label: 'Home', to: '/' }, { label: 'FAQ' }]} />
-        <div className="mx-auto max-w-3xl py-12 sm:py-16">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Help Center</p>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Frequently Asked Questions</h1>
-          <p className="mt-5 leading-7 text-gray-600">Quick answers to common questions about orders, delivery, payments, and returns.</p>
+    <Container className="py-10">
+      <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'FAQ' }]} className="mb-8" />
+      <div className="mx-auto max-w-3xl">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">Help center</p>
+        <h1 className="font-display text-3xl font-black tracking-tight text-[var(--color-text)] sm:text-4xl">
+          Frequently asked questions
+        </h1>
+        <p className="mt-5 leading-7 text-[var(--color-text-muted)]">
+          Quick answers to common questions about orders, delivery, payments, and returns.
+        </p>
 
-          <div className="mt-10 divide-y border-y">
-            {faqs.map((faq) => (
-              <details key={faq.question} className="group py-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
-                  {faq.question}
-                  <ChevronDown className="size-5 shrink-0 transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="max-w-2xl pt-4 leading-7 text-gray-600">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
+        <div className="mt-10">
+          <Accordion items={faqs} />
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 
