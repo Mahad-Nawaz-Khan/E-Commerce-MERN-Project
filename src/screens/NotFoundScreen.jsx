@@ -1,38 +1,15 @@
 import { Link } from 'react-router-dom'
-import { Breadcrumb } from '../components/ui/Breadcrumb'
+import { Button, Container } from '../components/ui'
 
-/** 404 page — breadcrumb + centered "404 Not Found" + back-home CTA. */
+/** 404 — full-bleed midnight with the gold wordmark accent; CTA back to shop. */
 function NotFoundScreen() {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="mt-10">
-        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24">
-          <Breadcrumb
-            crumbs={[
-              { label: 'Home', to: '/' },
-              { label: '404 Error' },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-16 sm:py-20 md:py-24 lg:py-32">
-        <div className="flex flex-col items-center text-center">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium mb-8">
-            404 Not Found
-          </h1>
-          <p className="text-base sm:text-lg text-muted-text mb-8 sm:mb-12">
-            Your visited page not found. You may go home page.
-          </p>
-          <Link
-            to="/"
-            className="inline-flex h-12 items-center justify-center rounded-sm bg-secondary px-8 text-base font-medium text-secondary-foreground hover:bg-secondary-hover"
-          >
-            Back to home page
-          </Link>
-        </div>
-      </div>
-    </div>
+    <Container className="flex min-h-[60vh] flex-col items-center justify-center text-center">
+      <p className="font-display text-7xl font-black tracking-tighter text-[var(--color-primary)] nums">404</p>
+      <h1 className="mt-4 font-display text-2xl font-bold text-[var(--color-text)]">This page took a different exit</h1>
+      <p className="mt-2 max-w-sm text-sm text-[var(--color-text-muted)]">The link may be broken or the page may have moved. Let's get you back to the showroom.</p>
+      <Button asChild className="mt-6"><Link to="/shop">Back to shop</Link></Button>
+    </Container>
   )
 }
 
