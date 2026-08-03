@@ -1,28 +1,23 @@
-import { HeroSection } from '../components/home/HeroSection'
-import { FlashSales } from '../components/home/FlashSales'
-import { BrowseCategories } from '../components/home/BrowseCategories'
-import { BestSelling } from '../components/home/BestSelling'
-import { MusicPromo } from '../components/home/MusicPromo'
-import { ExploreProducts } from '../components/home/ExploreProducts'
-import { NewArrivals } from '../components/home/NewArrivals'
-import { ServiceFeatures } from '../components/home/ServiceFeatures'
+import { HeroSection } from '../components/home/hero-section'
+import { FlashSales } from '../components/home/flash-sales'
+import { BrowseCategories } from '../components/home/browse-categories'
+import { BestSelling } from '../components/home/best-selling'
+import { ExploreProducts } from '../components/home/explore-products'
+import { NewArrivals } from '../components/home/new-arrivals'
+import { ServiceFeatures } from '../components/home/service-features'
 
-/** Home route — composes the storefront sections. */
+/** Home route — composes the storefront sections in a deliberate rhythm. */
 function HomeScreen() {
   return (
-    <main className="overflow-hidden">
+    <>
       <HeroSection />
       <FlashSales />
-      <div className="mx-4 border-t border-border-subtle sm:mx-6 lg:mx-10 xl:mx-16 2xl:mx-24" />
       <BrowseCategories />
-      <div className="mx-4 border-t border-border-subtle sm:mx-6 lg:mx-10 xl:mx-16 2xl:mx-24" />
       <BestSelling />
-      <div className="mx-4 border-t border-border-subtle sm:mx-6 lg:mx-10 xl:mx-16 2xl:mx-24" />
-      <MusicPromo />
       <ExploreProducts />
       <NewArrivals />
       <ServiceFeatures />
-    </main>
+    </>
   )
 }
 
