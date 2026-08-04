@@ -59,8 +59,8 @@ function CheckoutScreen() {
       <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'Cart', to: '/cart' }, { label: 'Checkout' }]} className="mb-4" />
       <h1 className="mb-6 font-display text-3xl font-black tracking-tight text-[var(--color-text)]">Checkout</h1>
       <form onSubmit={placeOrder} className="grid gap-8 lg:grid-cols-[1fr_360px]">
-        <div className="surface-paper space-y-4 rounded-lg p-6">
-          <h2 className="font-display text-lg font-bold text-[var(--color-content-inv)]">Shipping details</h2>
+        <div className="space-y-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+          <h2 className="font-display text-lg font-bold text-[var(--color-text)]">Shipping details</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <Input label="Full name" value={form.name} onChange={(e) => set('name', e.target.value)} error={errors.name} />
             <Input label="Email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)} error={errors.email} />
