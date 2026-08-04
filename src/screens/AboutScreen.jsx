@@ -1,7 +1,7 @@
 import { OurStory } from '../components/about/our-story'
 import { SiteStats } from '../components/about/site-stats'
 import { TeamMembers } from '../components/about/team-members'
-import { ServiceFeatures } from '../components/about/service-features'
+import { ServiceFeatures } from '../components/home/service-features'
 
 /** About route — story, stats, team, and service guarantees in the Midnight Showroom theme. */
 function AboutScreen() {
@@ -10,7 +10,7 @@ function AboutScreen() {
       <OurStory />
       <SiteStats />
       <TeamMembers />
-      <ServiceFeatures />
+      <ServiceFeatures variant="band" />
     </div>
   )
 }
