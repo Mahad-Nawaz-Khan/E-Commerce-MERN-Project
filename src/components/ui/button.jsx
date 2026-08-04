@@ -32,6 +32,21 @@ export const Button = forwardRef(function Button(
   ref
 ) {
   const Comp = asChild ? Slot : 'button'
+  // Radix Slot requires exactly ONE React element child. When asChild is set,
+  // the caller provides that element (e.g. <Link>); we must not inject a
+  // <Spinner/> as a second child. (loading + asChild is an unusual combo — if
+  // ever needed, wrap the child in a fragment-with-spinner via Slottable.)
+  if (asChild) {
+    return (
+      <Slot
+        ref={ref}
+        className={cn(buttonVariants({ variant, size }), loading && 'opacity-70 pointer-events-none', className)}
+        {...props}
+      >
+        {children}
+      </Slot>
+    )
+  }
   return (
     <Comp
       ref={ref}

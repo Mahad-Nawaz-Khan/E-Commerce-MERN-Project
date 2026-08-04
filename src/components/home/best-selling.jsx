@@ -16,7 +16,7 @@ export function BestSelling() {
             <span className="h-6 w-1.5 rounded-sm bg-[var(--color-primary)]" />
             <h2 className="font-display text-2xl font-bold text-[var(--color-text)] sm:text-3xl">Best selling</h2>
           </div>
-          <Button asChild variant="link" className="hidden sm:inline-flex">View all</Button>
+          <Button asChild variant="link" className="hidden sm:inline-flex"><Link to="/shop">View all</Link></Button>
         </div>
         <ProductGrid products={top} columns={4} />
         <div className="mt-8 text-center sm:hidden">
