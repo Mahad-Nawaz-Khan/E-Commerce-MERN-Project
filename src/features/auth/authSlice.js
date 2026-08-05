@@ -1,17 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-/** Mock auth slice. Real tokens + backend land in Phase C. Persisted to localStorage (Task 18). */
-const initialState = { user: null, status: 'idle' } // status: 'idle' | 'authenticated'
+const initialState = { 
+  user: null, 
+  token: null,
+  status: 'idle' // 'idle' | 'loading' | 'authenticated'
+}
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginSuccess: (state, action) => { state.user = action.payload; state.status = 'authenticated' },
-    logout: (state) => { state.user = null; state.status = 'idle' },
+    setCredentials: (state, action) => {
+      state.user = action.payload.user
+      state.token = action.payload.token
+      state.status = 'authenticated'
+    },
+    loginSuccess: (state, action) => { 
+      state.user = action.payload.user
+      state.token = action.payload.token
+      state.status = 'authenticated' 
+    },
+    tokenRefreshed: (state, action) => {
+      state.token = action.payload.token
+    },
+    logout: (state) => { 
+      state.user = null
+      state.token = null
+      state.status = 'idle' 
+    },
+    setLoading: (state) => {
+      state.status = 'loading'
+    },
   },
 })
 
-export const { loginSuccess, logout } = authSlice.actions
+export const { setCredentials, loginSuccess, tokenRefreshed, logout, setLoading } = authSlice.actions
+
+export const authReducer = authSlice.reducer
 
 export default authSlice.reducer

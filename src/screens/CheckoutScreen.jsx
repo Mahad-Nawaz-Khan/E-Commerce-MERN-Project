@@ -1,19 +1,24 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Container, Button, Input, RadioGroup, Breadcrumb, EmptyState } from '../components/ui'
 import { useCart } from '../hooks'
+import { useAuth } from '../hooks/useAuth'
+import { useCreateOrderMutation } from '../features/shop/shopApiSlice'
 import { SHIPPING_FEE, FREE_SHIP_THRESHOLD } from '../lib/constants'
 import { formatPrice } from '../lib/format'
 import toast from 'react-hot-toast'
 import { ShoppingBag } from 'lucide-react'
 
-const empty = { name: '', email: '', address: '', city: '', zip: '', country: '' }
+const empty = { name: '', email: '', address: '', city: '', state: '', zip: '', country: '' }
 
-/** Checkout route — validated shipping form + payment choice + order confirmation. */
+/** Checkout route — validated shipping form + payment choice + live order creation. */
 function CheckoutScreen() {
   const { items, subtotal, clear } = useCart()
+  const { isAuthenticated, user } = useAuth()
+  const navigate = useNavigate()
+  const [createOrder, { isLoading: placing }] = useCreateOrderMutation()
   const [form, setForm] = useState(empty)
-  const [payment, setPayment] = useState('card')
+  const [payment, setPayment] = useState('cod')
   const [errors, setErrors] = useState({})
   const [placed, setPlaced] = useState(null) // { id, total, email }
 
@@ -29,7 +34,10 @@ function CheckoutScreen() {
         <p className="font-display text-5xl font-black text-[var(--color-primary)]">✓</p>
         <h1 className="mt-4 font-display text-3xl font-black text-[var(--color-text)]">Order confirmed</h1>
         <p className="mt-2 text-sm text-[var(--color-text-muted)]">Order <span className="nums text-[var(--color-text)]">{placed.id}</span> — {formatPrice(placed.total)}. A confirmation is on its way to {placed.email}.</p>
-        <Button asChild className="mt-6"><Link to="/shop">Continue shopping</Link></Button>
+        <div className="mt-6 flex justify-center gap-3">
+          <Button asChild variant="secondary"><Link to={`/account/orders/${placed.id}`}>Track order</Link></Button>
+          <Button asChild><Link to="/shop">Continue shopping</Link></Button>
+        </div>
       </Container>
     )
   }
@@ -45,13 +53,37 @@ function CheckoutScreen() {
     setErrors(e)
     return Object.keys(e).length === 0
   }
-  function placeOrder(e) {
+  async function placeOrder(e) {
     e.preventDefault()
+    // Orders require authentication — the backend stamps req.user on the order.
+    if (!isAuthenticated) {
+      toast.error('Please sign in to place your order.')
+      navigate('/login?redirect=/checkout')
+      return
+    }
     if (!validate()) { toast.error('Please fix the highlighted fields.'); return }
-    const id = 'EX-' + Math.random().toString(36).slice(2, 8).toUpperCase()
-    setPlaced({ id, total, email: form.email })
-    clear()
-    toast.success('Order placed!')
+
+    const payload = {
+      items: items.map((i) => ({ product: i.id, quantity: i.quantity })),
+      shippingAddress: {
+        street: form.address.trim(),
+        city: form.city.trim(),
+        state: form.state.trim(),
+        zip: form.zip.trim(),
+        country: form.country.trim(),
+      },
+      paymentMethod: payment,
+    }
+
+    try {
+      const res = await createOrder(payload).unwrap()
+      const order = res.data
+      setPlaced({ id: order.trackingNumber || order.id.slice(-8).toUpperCase(), total: order.totalAmount, email: form.email })
+      clear()
+      toast.success('Order placed!')
+    } catch (err) {
+      toast.error(err?.data?.error?.message || 'Could not place order')
+    }
   }
 
   return (
@@ -61,15 +93,21 @@ function CheckoutScreen() {
       <form onSubmit={placeOrder} className="grid gap-8 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <h2 className="font-display text-lg font-bold text-[var(--color-text)]">Shipping details</h2>
+          {isAuthenticated && user && (
+            <p className="rounded-md bg-[var(--color-surface-2)] px-3 py-2 text-xs text-[var(--color-text-muted)]">
+              Signed in as <span className="font-medium text-[var(--color-text)]">{user.email}</span>
+            </p>
+          )}
           <div className="grid gap-4 sm:grid-cols-2">
             <Input label="Full name" value={form.name} onChange={(e) => set('name', e.target.value)} error={errors.name} />
             <Input label="Email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)} error={errors.email} />
             <Input label="Address" value={form.address} onChange={(e) => set('address', e.target.value)} error={errors.address} className="sm:col-span-2" />
             <Input label="City" value={form.city} onChange={(e) => set('city', e.target.value)} error={errors.city} />
+            <Input label="State / Province" value={form.state} onChange={(e) => set('state', e.target.value)} />
             <Input label="ZIP / Postal" value={form.zip} onChange={(e) => set('zip', e.target.value)} error={errors.zip} />
-            <Input label="Country" value={form.country} onChange={(e) => set('country', e.target.value)} error={errors.country} className="sm:col-span-2" />
+            <Input label="Country" value={form.country} onChange={(e) => set('country', e.target.value)} error={errors.country} />
           </div>
-          <div className="pt-2"><RadioGroup label="Payment" value={payment} onChange={setPayment} options={[{ value: 'card', label: 'Credit / Debit card' }, { value: 'cod', label: 'Cash on delivery' }]} /></div>
+          <div className="pt-2"><RadioGroup label="Payment" value={payment} onChange={setPayment} options={[{ value: 'card', label: 'Credit / Debit card' }, { value: 'cod', label: 'Cash on delivery' }, { value: 'safepay', label: 'SafePay' }]} /></div>
         </div>
         <aside className="h-fit space-y-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
           <h2 className="font-display text-lg font-bold text-[var(--color-text)]">Your order</h2>
@@ -83,7 +121,10 @@ function CheckoutScreen() {
             <div className="flex justify-between"><dt className="text-[var(--color-text-muted)]">Shipping</dt><dd className="nums">{shipping === 0 ? 'Free' : formatPrice(shipping)}</dd></div>
             <div className="flex justify-between font-display text-base font-bold"><dt>Total</dt><dd className="nums">{formatPrice(total)}</dd></div>
           </dl>
-          <Button type="submit" variant="sale" className="w-full">Place order</Button>
+          <Button type="submit" variant="sale" className="w-full" loading={placing}>Place order</Button>
+          {!isAuthenticated && (
+            <p className="text-center text-xs text-[var(--color-text-subtle)]">You&apos;ll need to <Link to="/login?redirect=/checkout" className="text-[var(--color-primary)] hover:underline">sign in</Link> to complete checkout.</p>
+          )}
         </aside>
       </form>
     </Container>

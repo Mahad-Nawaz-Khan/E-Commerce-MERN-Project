@@ -5,7 +5,12 @@ import { Footer } from './footer'
 import { CartDrawer } from '../../features/cart/components/cart-drawer'
 import { MobileNav } from './mobile-nav'
 
-export function MainLayout() {
+/**
+ * Site chrome: Navbar + MobileNav + main + Footer + CartDrawer.
+ * Used both as a layout route (renders <Outlet />) and as a wrapper element
+ * (renders children) — the latter lets nested dashboards reuse the chrome.
+ */
+export function MainLayout({ children }) {
   const { pathname } = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
   return (
@@ -13,7 +18,7 @@ export function MainLayout() {
       <Navbar />
       <MobileNav />
       <main className="flex-1">
-        <Outlet />
+        {children ?? <Outlet />}
       </main>
       <Footer />
       <CartDrawer />

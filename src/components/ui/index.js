@@ -24,3 +24,11 @@ export { Accordion } from './accordion'
 export { Tabs } from './tabs'
 export { Dialog } from './dialog'
 export { Drawer } from './drawer'
+
+// Dashboard primitives (user + admin panels)
+export { Card } from './card'
+export { StatCard } from './stat-card'
+export { StatusBadge } from './status-badge'
+export { DataTable } from './data-table'
+export { Timeline, OrderFlowSteps } from './timeline'
+export { Gauge, LineTrend, DonutChart, BarChartMini } from './chart'

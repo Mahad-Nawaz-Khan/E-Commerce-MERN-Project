@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
 import { Sparkles, UserPlus } from 'lucide-react'
 import { Button, Input } from '../components/ui'
-import { loginSuccess } from '../features/auth'
+import { setCredentials, useRegisterMutation } from '../features/auth'
 
 const empty = { name: '', email: '', password: '', confirm: '' }
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -15,6 +15,7 @@ function SignUpScreen() {
   const navigate = useNavigate()
   const [form, setForm] = useState(empty)
   const [errors, setErrors] = useState({})
+  const [register, { isLoading }] = useRegisterMutation()
 
   function set(k, v) { setForm((f) => ({ ...f, [k]: v })) }
 
@@ -28,12 +29,23 @@ function SignUpScreen() {
     return Object.keys(e).length === 0
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault()
     if (!validate()) { toast.error('Please fix the highlighted fields.'); return }
-    dispatch(loginSuccess({ email: form.email, name: form.name.trim() }))
-    toast.success('Account created — welcome to Exclusive!')
-    navigate('/')
+    try {
+      const res = await register({
+        name: form.name.trim(),
+        email: form.email,
+        password: form.password,
+      }).unwrap()
+      const { user, accessToken } = res.data
+      dispatch(setCredentials({ user, token: accessToken }))
+      toast.success('Account created — welcome to Exclusive!')
+      navigate('/')
+    } catch (err) {
+      const msg = err?.data?.error?.message || err?.data?.message || 'Could not create account'
+      toast.error(msg)
+    }
   }
 
   return (
@@ -100,7 +112,7 @@ function SignUpScreen() {
               error={errors.confirm}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" loading={isLoading}>
               <UserPlus className="h-4 w-4" /> Create account
             </Button>
           </form>

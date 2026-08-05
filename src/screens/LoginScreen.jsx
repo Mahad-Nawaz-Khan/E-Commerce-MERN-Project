@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
-import { Lock, Mail, Sparkles } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { Button, Input } from '../components/ui'
-import { loginSuccess } from '../features/auth'
+import { setCredentials, useLoginMutation } from '../features/auth'
 
 const empty = { email: '', password: '' }
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -13,8 +13,10 @@ const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 function LoginScreen() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
   const [form, setForm] = useState(empty)
   const [errors, setErrors] = useState({})
+  const [login, { isLoading }] = useLoginMutation()
 
   function set(k, v) { setForm((f) => ({ ...f, [k]: v })) }
 
@@ -26,12 +28,20 @@ function LoginScreen() {
     return Object.keys(e).length === 0
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault()
     if (!validate()) { toast.error('Please fix the highlighted fields.'); return }
-    dispatch(loginSuccess({ email: form.email }))
-    toast.success('Welcome back!')
-    navigate('/')
+    try {
+      const res = await login({ email: form.email, password: form.password }).unwrap()
+      // Backend envelope: { success, data: { user, accessToken } }
+      const { user, accessToken } = res.data
+      dispatch(setCredentials({ user, token: accessToken }))
+      toast.success(`Welcome back, ${user.name?.split(' ')[0] || 'friend'}!`)
+      navigate(params.get('redirect') || '/')
+    } catch (err) {
+      const msg = err?.data?.error?.message || err?.data?.message || 'Invalid email or password'
+      toast.error(msg)
+    }
   }
 
   return (
@@ -81,7 +91,7 @@ function LoginScreen() {
               error={errors.password}
             />
 
-            <Button type="submit" className="w-full">Log in</Button>
+            <Button type="submit" className="w-full" loading={isLoading}>Log in</Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-[var(--color-text-muted)]">
@@ -89,12 +99,13 @@ function LoginScreen() {
             <Link to="/sign-up" className="font-medium text-[var(--color-primary)] hover:underline">Sign up</Link>
           </p>
 
-          <div className="mt-8 flex items-center justify-center gap-2 rounded-md border border-dashed border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-text-subtle)]">
-            <Lock className="h-3.5 w-3.5" /> Demo sign-in — any valid email + 6-char password works.
+          <div className="mt-8 rounded-md border border-dashed border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-text-subtle)]">
+            Demo accounts (after seeding):
+            <div className="mt-1 nums leading-relaxed">
+              <div>Admin — <span className="text-[var(--color-text-muted)]">admin@exclusive.test / Admin123!</span></div>
+              <div>Customer — <span className="text-[var(--color-text-muted)]">customer@exclusive.test / Customer123!</span></div>
+            </div>
           </div>
-          <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-[var(--color-text-subtle)]">
-            <Mail className="h-3.5 w-3.5" /> Forgot password? Reset via support.
-          </p>
         </div>
       </div>
     </div>
