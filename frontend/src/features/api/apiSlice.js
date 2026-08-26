@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, tokenRefreshed, logout } from '../auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseUrl: import.meta.env.VITE_API_URL || '/api',
   // Send the HttpOnly refresh cookie on /auth/refresh.
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
