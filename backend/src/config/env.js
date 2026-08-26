@@ -34,7 +34,7 @@ export const env = Object.freeze({
     accessExpiry: process.env.ACCESS_TOKEN_EXPIRY || '15m',
     refreshExpiry: process.env.REFRESH_TOKEN_EXPIRY || '7d',
   },
-  allowedOrigins: (process.env.ALLOWED_ORIGINS || 'http://localhost:5173')
+  allowedOrigins: (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL || 'http://localhost:5173')
     .split(',').map((s) => s.trim()).filter(Boolean),
   email: {
     host: process.env.EMAIL_HOST || '',
