@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Uploads (local disk storage)
+uploads/
+
+# Build / logs
+dist/
+*.log
+logs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.sw?
+.zcode
+
+# Test coverage
+coverage/
+
+# Temporary seed backup
+*.backup.json
