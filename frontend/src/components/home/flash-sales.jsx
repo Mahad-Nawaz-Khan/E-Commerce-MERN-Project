@@ -6,11 +6,11 @@ import { Flame } from 'lucide-react'
 
 /** Flash sales — live countdown + grid of today's deals with a "View all" CTA. */
 export function FlashSales() {
-  const { todaysDeals } = useProducts()
+  const { todaysDeals, isLoading } = useProducts()
   const target = useStableTarget(3 * 24 * 60 * 60 * 1000) // 3 days
   const t = useCountdown(target)
   const deals = todaysDeals.slice(0, 4)
-  if (deals.length === 0) return null
+  if (!isLoading && deals.length === 0) return null
   return (
     <Section className="py-12 sm:py-16">
       <Container>
@@ -30,7 +30,7 @@ export function FlashSales() {
             ))}
           </div>
         </div>
-        <ProductGrid products={deals} columns={4} />
+        <ProductGrid products={deals} loading={isLoading} columns={4} />
         <div className="mt-8 text-center">
           <Button asChild variant="outline"><Link to="/shop">View all deals</Link></Button>
         </div>

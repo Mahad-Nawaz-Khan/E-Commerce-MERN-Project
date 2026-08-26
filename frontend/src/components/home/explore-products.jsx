@@ -5,9 +5,9 @@ import { useProducts } from '../../hooks'
 
 const PAGE_SIZE = 8
 
-/** Explore products — "Show more" local pagination over all products. */
+/** Explore products — "Show more" pagination over the live catalog. */
 export function ExploreProducts() {
-  const { all } = useProducts()
+  const { all, isLoading } = useProducts()
   const [visible, setVisible] = useState(PAGE_SIZE)
   const items = all.slice(0, visible)
   const hasMore = visible < all.length
@@ -18,7 +18,7 @@ export function ExploreProducts() {
           <span className="h-6 w-1.5 rounded-sm bg-[var(--color-primary)]" />
           <h2 className="font-display text-2xl font-bold text-[var(--color-text)] sm:text-3xl">Explore the showroom</h2>
         </div>
-        <ProductGrid products={items} columns={4} />
+        <ProductGrid products={items} loading={isLoading} columns={4} />
         {hasMore && (
           <div className="mt-8 text-center">
             <Button variant="outline" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Show more</Button>

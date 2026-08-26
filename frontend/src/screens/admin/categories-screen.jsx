@@ -2,6 +2,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Pencil, Trash2, Check, X, FolderTree } from 'lucide-react'
 import { Card, Input, Textarea, Button, Dialog, EmptyState } from '../../components/ui'
+import { ImageUploader } from '../../components/admin/image-uploader'
 import {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
@@ -94,7 +95,7 @@ export function CategoriesScreen() {
         <form onSubmit={submit} className="space-y-3">
           <Input label="Name *" required value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="e.g. Smartphones" />
           <Textarea label="Description" rows={3} value={form.description} onChange={(e) => set('description', e.target.value)} />
-          <Input label="Image URL" value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="/images/categories/phones.png" />
+          <ImageUploader label="Category image" single urls={form.image ? [form.image] : []} onChange={(urls) => set('image', urls[0] || '')} />
           <div className="flex justify-end gap-2 pt-2">
             <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
             <Button type="submit" loading={creating || updating}><Check className="h-4 w-4" /> {editingId ? 'Save' : 'Create'}</Button>

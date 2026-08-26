@@ -6,6 +6,7 @@ import { Button } from '../ui/button'
 import { AnnouncementBar } from './announcement-bar'
 import { SearchBar } from './search-bar'
 import { MegaMenu } from './mega-menu'
+import { NotificationsBell } from './notifications-bell'
 import { useCart, useWishlist, useAuth } from '../../hooks'
 import { useDispatch } from 'react-redux'
 import { toggleMobileNav, openCartDrawer } from '../../features/ui'
@@ -51,6 +52,7 @@ export function Navbar() {
           ) : (
             <Button asChild variant="ghost" size="icon" aria-label="Log in"><Link to="/login"><User className="h-5 w-5" /></Link></Button>
           )}
+          <NotificationsBell />
           <Button asChild variant="ghost" size="icon" aria-label={`Wishlist, ${wishCount} items`} className="relative">
             <Link to="/wishlist">
               <Heart className="h-5 w-5" />

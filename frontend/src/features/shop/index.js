@@ -1,1 +1,1 @@
-export * from './selectors'
+export { shopApiSlice, useGetProductsQuery, useGetProductBySlugQuery } from './shopApiSlice'

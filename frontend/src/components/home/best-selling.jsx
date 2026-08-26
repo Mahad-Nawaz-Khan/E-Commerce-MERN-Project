@@ -5,9 +5,9 @@ import { useProducts } from '../../hooks'
 
 /** Best selling — bestsellers.slice(0,4) via ProductGrid + a "View all" CTA. */
 export function BestSelling() {
-  const { bestsellers } = useProducts()
+  const { bestsellers, isLoading } = useProducts()
   const top = bestsellers.slice(0, 4)
-  if (top.length === 0) return null
+  if (!isLoading && top.length === 0) return null
   return (
     <Section className="py-12 sm:py-16">
       <Container>
@@ -18,7 +18,7 @@ export function BestSelling() {
           </div>
           <Button asChild variant="link" className="hidden sm:inline-flex"><Link to="/shop">View all</Link></Button>
         </div>
-        <ProductGrid products={top} columns={4} />
+        <ProductGrid products={top} loading={isLoading} columns={4} />
         <div className="mt-8 text-center sm:hidden">
           <Button asChild variant="outline"><Link to="/shop">View all</Link></Button>
         </div>

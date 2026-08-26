@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Button, QuantityStepper, EmptyState, Input, Breadcrumb } from '../components/ui'
+import { Container, Button, QuantityStepper, EmptyState, Input, Breadcrumb, Skeleton } from '../components/ui'
 import { useCart } from '../hooks'
 import { validateCoupon } from '../data/coupons'
 import { formatPrice } from '../lib/format'
@@ -10,7 +10,7 @@ import toast from 'react-hot-toast'
 
 /** Cart route — line items with qty steppers, coupon validation, and live totals. */
 function CartScreen() {
-  const { items, subtotal, totalItems, updateQuantity, removeFromCart } = useCart()
+  const { items, subtotal, totalItems, updateQuantity, removeFromCart, isLoading } = useCart()
   const [code, setCode] = useState('')
   const [coupon, setCoupon] = useState(null)
   const discount = coupon?.discount || 0
@@ -25,6 +25,16 @@ function CartScreen() {
     else { setCoupon(null); toast.error(r.message) }
   }
 
+  if (isLoading) {
+    return (
+      <Container className="py-8">
+        <Skeleton className="mb-6 h-9 w-48" />
+        <div className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-28 w-full rounded-lg" />)}
+        </div>
+      </Container>
+    )
+  }
   if (items.length === 0) {
     return <Container className="py-16"><EmptyState icon={ShoppingBag} title="Your cart is empty" description="Browse the showroom and add something you love." action={<Button asChild><Link to="/shop">Shop now</Link></Button>} /></Container>
   }

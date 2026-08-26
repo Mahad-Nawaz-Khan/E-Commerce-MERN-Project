@@ -2,13 +2,18 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { store } from './store'
+import { AuthSync } from './auth-sync'
+import { ErrorBoundary } from '../components/ui/error-boundary'
 
-/** Redux -> Router -> children -> Toaster. */
+/** Redux -> Router -> ErrorBoundary -> children -> Toaster, with guest-state sync on login. */
 export function Providers({ children }) {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        {children}
+        <AuthSync />
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
         <Toaster
           position="bottom-right"
           toastOptions={{

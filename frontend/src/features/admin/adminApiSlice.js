@@ -137,6 +137,33 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+
+    // Media library (Cloudinary-backed, admin-only). FormData bodies let
+    // fetchBaseQuery set the multipart boundary itself — never set Content-Type.
+    uploadMedia: builder.mutation({
+      query: (file) => {
+        const body = new FormData()
+        body.append('file', file)
+        return { url: '/media', method: 'POST', body }
+      },
+      invalidatesTags: ['Media'],
+    }),
+    uploadMultipleMedia: builder.mutation({
+      query: (files) => {
+        const body = new FormData()
+        files.forEach((file) => body.append('files', file))
+        return { url: '/media/multiple', method: 'POST', body }
+      },
+      invalidatesTags: ['Media'],
+    }),
+    getMedia: builder.query({
+      query: ({ page = 1, limit = 24 } = {}) => ({ url: '/media', params: { page, limit } }),
+      providesTags: ['Media'],
+    }),
+    deleteMedia: builder.mutation({
+      query: (id) => ({ url: `/media/${id}`, method: 'DELETE' }),
+      invalidatesTags: ['Media'],
+    }),
   }),
 })
 
@@ -163,4 +190,8 @@ export const {
   useDeleteReviewMutation,
   useBulkUpdateProductsMutation,
   useBulkDeleteProductsMutation,
+  useUploadMediaMutation,
+  useUploadMultipleMediaMutation,
+  useGetMediaQuery,
+  useDeleteMediaMutation,
 } = adminApiSlice

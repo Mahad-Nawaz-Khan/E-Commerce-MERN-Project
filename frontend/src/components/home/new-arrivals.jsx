@@ -5,9 +5,9 @@ import { cn } from '../../lib/cn'
 
 /** New arrivals — large promo cards built from `new`-tagged products, hover-zoom, "Shop now". */
 export function NewArrivals() {
-  const { all } = useProducts()
-  const fresh = all.filter((p) => (p.tags || []).includes('new')).slice(0, 2)
-  if (fresh.length === 0) return null
+  const { newArrivals, isLoading } = useProducts()
+  const fresh = newArrivals.slice(0, 2)
+  if (isLoading || fresh.length === 0) return null
   return (
     <Section className="py-12 sm:py-16">
       <Container>

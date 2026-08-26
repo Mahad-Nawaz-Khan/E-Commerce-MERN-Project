@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Container, Button, Input, RadioGroup, Breadcrumb, EmptyState } from '../components/ui'
 import { useCart } from '../hooks'
 import { useAuth } from '../hooks/useAuth'
-import { useCreateOrderMutation } from '../features/shop/shopApiSlice'
+import { useCreateOrderMutation, useGetPaymentMethodsQuery, useCreateStripeCheckoutMutation } from '../features/shop/shopApiSlice'
 import { SHIPPING_FEE, FREE_SHIP_THRESHOLD } from '../lib/constants'
 import { formatPrice } from '../lib/format'
 import toast from 'react-hot-toast'
@@ -17,10 +17,24 @@ function CheckoutScreen() {
   const { isAuthenticated, user } = useAuth()
   const navigate = useNavigate()
   const [createOrder, { isLoading: placing }] = useCreateOrderMutation()
+  const { data: methodsData } = useGetPaymentMethodsQuery()
+  const [stripeCheckout, { isLoading: startingPayment }] = useCreateStripeCheckoutMutation()
   const [form, setForm] = useState(empty)
   const [payment, setPayment] = useState('cod')
   const [errors, setErrors] = useState({})
   const [placed, setPlaced] = useState(null) // { orderNumber, total, email }
+
+  // Card is always offered: real Stripe checkout when keys exist, otherwise
+  // the choice is simply recorded on the order (demo mode).
+  const methods = methodsData?.data || { cod: true, card: true }
+  const paymentOptions = [
+    ...(methods.card ? [{ value: 'card', label: methods.stripeEnabled ? 'Credit / Debit card (Stripe)' : 'Credit / Debit card' }] : []),
+    ...(methods.cod ? [{ value: 'cod', label: 'Cash on delivery' }] : []),
+    ...(methods.safepay ? [{ value: 'safepay', label: 'SafePay' }] : []),
+  ]
+  const activePayment = paymentOptions.some((o) => o.value === payment)
+    ? payment
+    : paymentOptions[0]?.value || 'cod'
 
   const shipping = subtotal >= FREE_SHIP_THRESHOLD ? 0 : SHIPPING_FEE
   const total = subtotal + shipping
@@ -74,12 +88,27 @@ function CheckoutScreen() {
         zip: form.zip.trim(),
         country: form.country.trim(),
       },
-      paymentMethod: payment,
+      paymentMethod: activePayment,
     }
 
     try {
       const res = await createOrder(payload).unwrap()
       const order = res.data
+
+      // With Stripe keys, card payments continue on Stripe's hosted checkout;
+      // the redirect lands back on the order page (?paid=1) after payment.
+      // Without keys, the card choice is simply recorded (demo mode).
+      if (activePayment === 'card' && methods.stripeEnabled) {
+        try {
+          const session = await stripeCheckout(order.id).unwrap()
+          clear()
+          window.location.assign(session.data.url)
+          return
+        } catch (err) {
+          toast.error(err?.data?.error?.message || 'Card payment could not start — your order is saved as unpaid')
+        }
+      }
+
       setPlaced({ orderNumber: order.orderNumber || `EX-${order.id.slice(-8).toUpperCase()}`, total: order.totalAmount, email: form.email })
       clear()
       toast.success('Order placed!')
@@ -109,7 +138,7 @@ function CheckoutScreen() {
             <Input label="ZIP / Postal" value={form.zip} onChange={(e) => set('zip', e.target.value)} error={errors.zip} />
             <Input label="Country" value={form.country} onChange={(e) => set('country', e.target.value)} error={errors.country} />
           </div>
-          <div className="pt-2"><RadioGroup label="Payment" value={payment} onChange={setPayment} options={[{ value: 'card', label: 'Credit / Debit card' }, { value: 'cod', label: 'Cash on delivery' }, { value: 'safepay', label: 'SafePay' }]} /></div>
+          <div className="pt-2"><RadioGroup label="Payment" value={activePayment} onChange={setPayment} options={paymentOptions} /></div>
         </div>
         <aside className="h-fit space-y-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
           <h2 className="font-display text-lg font-bold text-[var(--color-text)]">Your order</h2>
@@ -123,7 +152,7 @@ function CheckoutScreen() {
             <div className="flex justify-between"><dt className="text-[var(--color-text-muted)]">Shipping</dt><dd className="nums">{shipping === 0 ? 'Free' : formatPrice(shipping)}</dd></div>
             <div className="flex justify-between font-display text-base font-bold"><dt>Total</dt><dd className="nums">{formatPrice(total)}</dd></div>
           </dl>
-          <Button type="submit" variant="sale" className="w-full" loading={placing}>Place order</Button>
+          <Button type="submit" variant="sale" className="w-full" loading={placing || startingPayment}>Place order</Button>
           {!isAuthenticated && (
             <p className="text-center text-xs text-[var(--color-text-subtle)]">You&apos;ll need to <Link to="/login?redirect=/checkout" className="text-[var(--color-primary)] hover:underline">sign in</Link> to complete checkout.</p>
           )}

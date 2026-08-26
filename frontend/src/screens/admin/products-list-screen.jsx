@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { Plus, Search, Pencil, Trash2, Check, X, Upload } from 'lucide-react'
+import { Plus, Search, Pencil, Trash2, Check, X } from 'lucide-react'
 import { Card, Input, Select, Textarea, Button, DataTable, StatusBadge, Dialog, Switch } from '../../components/ui'
+import { ImageUploader } from '../../components/admin/image-uploader'
 import {
   useGetAdminProductsQuery,
   useCreateProductMutation,
@@ -17,7 +18,7 @@ import { formatPrice, formatNumber } from '../../lib/format'
 const PAGE_SIZE = 20
 const emptyForm = {
   name: '', description: '', price: '', originalPrice: '', category: '',
-  brand: '', sku: '', stock: '0', images: '', sizes: '', tags: '', colors: '', isActive: true,
+  brand: '', sku: '', stock: '0', images: [], sizes: '', tags: '', colors: '', isActive: true,
 }
 
 /** Products management — list (filter/search/paginate), create/edit, delete, bulk ops. */
@@ -66,7 +67,7 @@ export function ProductsListScreen() {
       brand: p.brand || '',
       sku: p.sku || '',
       stock: String(p.stock ?? '0'),
-      images: (p.images || []).join('\n'),
+      images: p.images || [],
       sizes: (p.sizes || []).join(', '),
       tags: (p.tags || []).join(', '),
       colors: (p.colors || []).map((c) => `${c.name}:${c.value}`).join(', '),
@@ -89,7 +90,7 @@ export function ProductsListScreen() {
       brand: form.brand.trim(),
       sku: form.sku.trim() || undefined,
       stock: Number(form.stock) || 0,
-      images: form.images.split('\n').map((s) => s.trim()).filter(Boolean),
+      images: form.images,
       sizes: form.sizes.split(',').map((s) => s.trim()).filter(Boolean),
       tags: form.tags.split(',').map((s) => s.trim()).filter(Boolean),
       colors: form.colors.split(',').map((s) => s.trim()).filter(Boolean).map((pair) => {
@@ -257,7 +258,7 @@ export function ProductsListScreen() {
             <Input label="Brand" value={form.brand} onChange={(e) => set('brand', e.target.value)} />
             <Input label="SKU" value={form.sku} onChange={(e) => set('sku', e.target.value)} />
           </div>
-          <Textarea label="Image URLs (one per line)" rows={2} value={form.images} onChange={(e) => set('images', e.target.value)} placeholder="/images/products/phone.png" />
+          <ImageUploader label="Product images" urls={form.images} onChange={(urls) => set('images', urls)} />
           <Input label="Sizes (comma-separated)" value={form.sizes} onChange={(e) => set('sizes', e.target.value)} placeholder="S, M, L, XL" />
           <Input label="Tags (comma-separated)" value={form.tags} onChange={(e) => set('tags', e.target.value)} placeholder="featured, bestseller" />
           <Input label="Colors (name:hex, comma-separated)" value={form.colors} onChange={(e) => set('colors', e.target.value)} placeholder="Black:#171717, Silver:#C0C0C0" />
@@ -269,9 +270,6 @@ export function ProductsListScreen() {
             <Button type="button" variant="ghost" onClick={() => setFormOpen(false)}>Cancel</Button>
             <Button type="submit" loading={creating || updating}><Check className="h-4 w-4" /> {editing ? 'Save changes' : 'Create product'}</Button>
           </div>
-          <p className="flex items-center gap-1.5 pt-1 text-xs text-[var(--color-text-subtle)]">
-            <Upload className="h-3.5 w-3.5" /> Tip: for image uploads use the /uploads endpoint, then paste the URL above.
-          </p>
         </form>
       </Dialog>
 

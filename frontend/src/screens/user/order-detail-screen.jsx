@@ -1,5 +1,5 @@
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
 import { ArrowLeft, Printer, XCircle, MapPin, CreditCard } from 'lucide-react'
 import { Card, StatusBadge, Button, Spinner, OrderFlowSteps } from '../../components/ui'
@@ -14,6 +14,17 @@ export function OrderDetailScreen() {
   const { data: res, isLoading, isError } = useGetOrderQuery(id)
   const [cancelOrder, { isLoading: cancelling }] = useCancelOrderMutation()
   const [confirming, setConfirming] = useState(false)
+
+  // Stripe checkout redirects back here with ?paid=1|0 — acknowledge it once.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const paidToastShown = useRef(false)
+  useEffect(() => {
+    if (paidToastShown.current) return
+    const paid = searchParams.get('paid')
+    if (paid === '1') { toast.success('Payment received — thank you!'); paidToastShown.current = true }
+    else if (paid === '0') { toast.error('Payment was canceled. Your order remains unpaid.'); paidToastShown.current = true }
+    if (paid) setSearchParams({}, { replace: true })
+  }, [searchParams, setSearchParams])
 
   const order = res?.data
 

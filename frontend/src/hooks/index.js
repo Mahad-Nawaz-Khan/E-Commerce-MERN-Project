@@ -1,7 +1,6 @@
 export { useCart } from './useCart'
 export { useWishlist } from './useWishlist'
 export { useProducts } from './useProducts'
-export { useProduct } from './useProduct'
 export { useMediaQuery } from './useMediaQuery'
 export { useDebounce } from './useDebounce'
 export { useCountdown, useStableTarget, pad, DURATIONS } from './useCountdown'

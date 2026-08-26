@@ -1,0 +1,19 @@
+# IDE & local tooling
+.zcode/
+.zcode
+.vscode/
+.idea/
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.local
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log

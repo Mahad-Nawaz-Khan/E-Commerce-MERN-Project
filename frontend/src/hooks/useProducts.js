@@ -1,22 +1,27 @@
-import { useMemo } from 'react'
-import { getProductSummaries, getProductSummariesByTag } from '../data/products'
+import { useGetProductsQuery } from '../features/shop/shopApiSlice'
+import { normalizeProduct } from '../lib/product'
+
+const pick = (result) => (result.data?.data || []).map(normalizeProduct)
 
 /**
- * Static product summary hook for product-card grids (Flash Sales, Best
- * Sellers, Explore, Wishlist "Just For You", Shop). Returns only the fields a
- * card needs (id, name, slug, image, price, originalPrice, rating, reviews,
- * category, tags) so grids don't carry full detail-page payloads.
- *
- * Product detail screens should use `useProduct` instead.
+ * Live catalog hook for product-card grids (Flash Sales, Best Sellers,
+ * Explore, Wishlist "Just For You"). Each section query is cached and deduped
+ * by RTK Query, so multiple components asking for the same slice share one
+ * request. Returns display-normalized products (id/image/rating/reviews).
  */
 export function useProducts() {
-  return useMemo(
-    () => ({
-      all: getProductSummaries(),
-      todaysDeals: getProductSummariesByTag('todays-deal'),
-      bestsellers: getProductSummariesByTag('bestseller'),
-      featured: getProductSummariesByTag('featured'),
-    }),
-    [],
-  )
+  const deals = useGetProductsQuery({ tags: 'todays-deal', limit: 8 })
+  const best = useGetProductsQuery({ tags: 'bestseller', limit: 8 })
+  const fresh = useGetProductsQuery({ tags: 'new', limit: 8 })
+  const featured = useGetProductsQuery({ tags: 'featured', limit: 8 })
+  const all = useGetProductsQuery({ limit: 24 })
+
+  return {
+    all: pick(all),
+    todaysDeals: pick(deals),
+    bestsellers: pick(best),
+    newArrivals: pick(fresh),
+    featured: pick(featured),
+    isLoading: all.isFetching || deals.isFetching || best.isFetching,
+  }
 }

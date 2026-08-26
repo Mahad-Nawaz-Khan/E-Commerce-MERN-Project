@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Drawer } from '../ui/drawer'
 import { closeMobileNav } from '../../features/ui'
-import { categories } from '../../data/categories'
+import { useGetCategoryTreeQuery } from '../../features/shop/shopApiSlice'
 
 export function MobileNav() {
   const open = useSelector((s) => s.ui.mobileNavOpen)
   const dispatch = useDispatch()
+  const { data } = useGetCategoryTreeQuery()
+  const categories = data?.data || []
   return (
     <Drawer open={open} onClose={() => dispatch(closeMobileNav())} side="left" title="Menu">
       <nav className="flex flex-col gap-1 p-4" onClick={() => dispatch(closeMobileNav())}>

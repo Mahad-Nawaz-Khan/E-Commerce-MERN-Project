@@ -28,7 +28,7 @@ export function OrdersListScreen() {
       key: 'id', header: 'Order #',
       cell: (o) => (
         <div>
-          <p className="text-sm font-semibold text-[var(--color-text)]">#{o.trackingNumber || o.id.slice(-8).toUpperCase()}</p>
+          <p className="text-sm font-semibold text-[var(--color-text)]">#{o.trackingNumber || o.orderNumber || (o.id || o._id || '').slice(-8).toUpperCase()}</p>
           <p className="text-xs text-[var(--color-text-muted)]">{formatDate(o.createdAt)}</p>
         </div>
       ),
@@ -92,7 +92,7 @@ export function OrdersListScreen() {
           rows={orders}
           rowKey="id"
           loading={isLoading}
-          onRowClick={(o) => navigate(`/admin/orders/${o.id}`)}
+          onRowClick={(o) => navigate(`/admin/orders/${o.orderNumber || o.id || o._id}`)}
           pagination={pagination ? { page: pagination.page, pageCount: pagination.pages, onPageChange: setPage } : undefined}
           empty={{ title: 'No orders found', description: 'Try adjusting filters.' }}
         />

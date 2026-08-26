@@ -23,14 +23,18 @@ export const shopApiSlice = apiSlice.injectEndpoints({
       query: () => '/categories?limit=100',
       providesTags: ['Category'],
     }),
+    getCategoryTree: builder.query({
+      query: () => '/categories/tree',
+      providesTags: ['Category'],
+    }),
 
     // ---- Cart (authenticated, server-side) ----
     getCart: builder.query({ query: () => '/cart', providesTags: ['Cart'] }),
     addCartItem: builder.mutation({
-      query: ({ product, quantity = 1, color, size }) => ({
+      query: ({ productId, quantity = 1, color, size }) => ({
         url: '/cart/items',
         method: 'POST',
-        body: { product, quantity, color, size },
+        body: { productId, quantity, color, size },
       }),
       invalidatesTags: ['Cart'],
     }),
@@ -51,10 +55,36 @@ export const shopApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Cart'],
     }),
 
+    // ---- Wishlist (authenticated, server-side) ----
+    getWishlist: builder.query({ query: () => '/wishlist', providesTags: ['Wishlist'] }),
+    toggleWishlist: builder.mutation({
+      query: (productId) => ({
+        url: '/wishlist/items',
+        method: 'POST',
+        body: { productId },
+      }),
+      invalidatesTags: ['Wishlist'],
+    }),
+    removeWishlistItem: builder.mutation({
+      query: (productId) => ({ url: `/wishlist/items/${productId}`, method: 'DELETE' }),
+      invalidatesTags: ['Wishlist'],
+    }),
+    clearWishlistServer: builder.mutation({
+      query: () => ({ url: '/wishlist', method: 'DELETE' }),
+      invalidatesTags: ['Wishlist'],
+    }),
+
     // ---- Checkout ----
     createOrder: builder.mutation({
       query: (body) => ({ url: '/orders', method: 'POST', body }),
       invalidatesTags: ['Order', 'Product', 'Cart'],
+    }),
+    getPaymentMethods: builder.query({
+      query: () => '/payments/methods',
+    }),
+    createStripeCheckout: builder.mutation({
+      query: (orderId) => ({ url: `/payments/stripe/checkout/${orderId}`, method: 'POST' }),
+      invalidatesTags: ['Order'],
     }),
 
     // ---- Reviews (public read, auth write) ----
@@ -77,12 +107,19 @@ export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,
   useGetCategoriesPublicQuery,
+  useGetCategoryTreeQuery,
   useGetCartQuery,
   useAddCartItemMutation,
   useUpdateCartItemMutation,
   useRemoveCartItemMutation,
   useClearCartServerMutation,
+  useGetWishlistQuery,
+  useToggleWishlistMutation,
+  useRemoveWishlistItemMutation,
+  useClearWishlistServerMutation,
   useCreateOrderMutation,
+  useGetPaymentMethodsQuery,
+  useCreateStripeCheckoutMutation,
   useGetReviewsQuery,
   useCreateReviewMutation,
 } = shopApiSlice

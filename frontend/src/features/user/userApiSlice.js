@@ -87,6 +87,31 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Order'],
     }),
+
+    // Notifications (in-app center; see components/layout/notifications-bell)
+    getNotifications: builder.query({
+      query: (params = {}) => ({
+        url: '/notifications',
+        params: { limit: 15, ...params },
+      }),
+      providesTags: ['Notification'],
+    }),
+    getUnreadCount: builder.query({
+      query: () => '/notifications/unread-count',
+      providesTags: ['Notification'],
+    }),
+    markNotificationRead: builder.mutation({
+      query: (id) => ({ url: `/notifications/${id}/read`, method: 'POST' }),
+      invalidatesTags: ['Notification'],
+    }),
+    markAllNotificationsRead: builder.mutation({
+      query: () => ({ url: '/notifications/read-all', method: 'POST' }),
+      invalidatesTags: ['Notification'],
+    }),
+    deleteNotification: builder.mutation({
+      query: (id) => ({ url: `/notifications/${id}`, method: 'DELETE' }),
+      invalidatesTags: ['Notification'],
+    }),
   }),
 })
 
@@ -104,4 +129,9 @@ export const {
   useGetOrderQuery,
   useGetOrderTrackingQuery,
   useCancelOrderMutation,
+  useGetNotificationsQuery,
+  useGetUnreadCountQuery,
+  useMarkNotificationReadMutation,
+  useMarkAllNotificationsReadMutation,
+  useDeleteNotificationMutation,
 } = userApiSlice
