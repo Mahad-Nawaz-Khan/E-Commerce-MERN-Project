@@ -70,9 +70,13 @@ const ORDER_EMAIL_COPY = {
     subject: (o) => `Order ${o.orderNumber} delivered`,
     line: () => `Your order has been delivered. Enjoy! If anything isn't right, our support team is here to help.`,
   },
+  cancelled: {
+    subject: (o) => `Order ${o.orderNumber} cancelled`,
+    line: () => `Your order has been cancelled and any reserved stock has been returned. If you didn't request this, please contact our support team.`,
+  },
 }
 
-/** Transactional order email — kind: 'confirmed' | 'shipped' | 'delivered'. */
+/** Transactional order email — kind: 'confirmed' | 'shipped' | 'delivered' | 'cancelled'. */
 export async function sendOrderEmail(order, user, kind) {
   const copy = ORDER_EMAIL_COPY[kind]
   if (!copy) return
@@ -80,6 +84,7 @@ export async function sendOrderEmail(order, user, kind) {
   await send({
     to: user.email,
     subject: copy.subject(order),
-    html: `<p>Hi ${user.name},</p><p>${copy.line(order)}</p><p><a href="${url}">Track your order</a></p><p>Exclusive — premium tech & lifestyle.</p>`,
+    html: `<p>Hi ${user.name},</p><p>${copy.line(order)}</p><p><a href="${url}">View your order</a></p><p>Exclusive — premium tech & lifestyle.</p>`,
   })
 }
+

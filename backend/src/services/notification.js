@@ -73,6 +73,7 @@ export function notifyOrderEvent(order, event) {
         link: orderLink(order),
         metadata: { orderId: order._id },
       })
+      await sendOrderEmail(order, user, 'cancelled')
     }
   }, `order:${event}`)
 }

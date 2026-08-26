@@ -62,8 +62,8 @@ export const createOrder = asyncHandler(async (req, res) => {
   // Clear the user's cart on success.
   await Cart.updateOne({ user: req.user._id }, { items: [] })
 
-  // Fire-and-forget: confirmation notification + email never block the order.
-  void notifyOrderEvent(order, 'placed')
+  // Await notification + email so it completes before the serverless function exits.
+  await notifyOrderEvent(order, 'placed')
 
   res.status(201).json({ success: true, data: order })
 })
@@ -100,7 +100,7 @@ export const updateOrderStatus = asyncHandler(async (req, res) => {
   if (estimatedDelivery) order.estimatedDelivery = estimatedDelivery
 
   await order.save()
-  if (statusChanged) void notifyOrderEvent(order, 'status')
+  if (statusChanged) await notifyOrderEvent(order, 'status')
   res.json({ success: true, data: order })
 })
 
@@ -142,7 +142,7 @@ export const cancelOrder = asyncHandler(async (req, res) => {
     session.endSession()
   }
 
-  void notifyOrderEvent(order, 'cancelled')
+  await notifyOrderEvent(order, 'cancelled')
   res.json({ success: true, data: order })
 })
 
