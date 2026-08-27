@@ -1,27 +1,26 @@
-import { useGetProductsQuery } from '../features/shop/shopApiSlice'
+import { useGetHomepageDataQuery } from '../features/shop/shopApiSlice'
 import { normalizeProduct } from '../lib/product'
 
-const pick = (result) => (result.data?.data || []).map(normalizeProduct)
+const mapList = (arr) => (arr || []).map(normalizeProduct)
 
 /**
- * Live catalog hook for product-card grids (Flash Sales, Best Sellers,
- * Explore, Wishlist "Just For You"). Each section query is cached and deduped
- * by RTK Query, so multiple components asking for the same slice share one
- * request. Returns display-normalized products (id/image/rating/reviews).
+ * Live catalog hook for storefront sections (Flash Sales, Best Sellers,
+ * Explore, New Arrivals, Featured Drop, Categories). Powered by a single
+ * bulk homepage query with edge + client cache.
  */
 export function useProducts() {
-  const deals = useGetProductsQuery({ tags: 'todays-deal', limit: 8 })
-  const best = useGetProductsQuery({ tags: 'bestseller', limit: 8 })
-  const fresh = useGetProductsQuery({ tags: 'new', limit: 8 })
-  const featured = useGetProductsQuery({ tags: 'featured', limit: 8 })
-  const all = useGetProductsQuery({ limit: 24 })
+  const { data, isLoading, isFetching, isSuccess } = useGetHomepageDataQuery()
+  const payload = data?.data
 
   return {
-    all: pick(all),
-    todaysDeals: pick(deals),
-    bestsellers: pick(best),
-    newArrivals: pick(fresh),
-    featured: pick(featured),
-    isLoading: all.isFetching || deals.isFetching || best.isFetching,
+    all: mapList(payload?.explore),
+    todaysDeals: mapList(payload?.todaysDeals),
+    bestsellers: mapList(payload?.bestsellers),
+    newArrivals: mapList(payload?.newArrivals),
+    featured: mapList(payload?.featured),
+    categories: payload?.categories || [],
+    isLoading,
+    isFetching,
+    isSuccess,
   }
 }

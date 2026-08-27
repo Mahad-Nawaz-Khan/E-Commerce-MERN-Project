@@ -8,6 +8,11 @@ import { apiSlice } from '../api/apiSlice'
 export const shopApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // ---- Public catalog ----
+    getHomepageData: builder.query({
+      query: () => '/products/homepage',
+      providesTags: ['Product', 'Category'],
+      keepUnusedDataFor: 300,
+    }),
     getProducts: builder.query({
       query: (params = {}) => ({
         url: '/products',
@@ -104,6 +109,7 @@ export const shopApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
+  useGetHomepageDataQuery,
   useGetProductsQuery,
   useGetProductBySlugQuery,
   useGetCategoriesPublicQuery,

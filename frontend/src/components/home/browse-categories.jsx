@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Section, Container, Skeleton } from '../ui'
-import { useGetCategoryTreeQuery } from '../../features/shop/shopApiSlice'
+import { useProducts } from '../../hooks'
 import { categoryIcon } from '../../lib/product'
 import { cn } from '../../lib/cn'
 
 /** Browse categories — live catalog cards linking to /shop?category=<name>. */
 export function BrowseCategories() {
-  const { data, isLoading } = useGetCategoryTreeQuery()
-  const categories = data?.data || []
+  const { categories, isLoading } = useProducts()
   return (
     <Section className="py-12 sm:py-16">
       <Container>

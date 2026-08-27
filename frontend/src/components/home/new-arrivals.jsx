@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Section, Container } from '../ui'
+import { Section, Container, Skeleton } from '../ui'
 import { useProducts } from '../../hooks'
 import { cn } from '../../lib/cn'
 
@@ -7,7 +7,25 @@ import { cn } from '../../lib/cn'
 export function NewArrivals() {
   const { newArrivals, isLoading } = useProducts()
   const fresh = newArrivals.slice(0, 2)
-  if (isLoading || fresh.length === 0) return null
+
+  if (isLoading && fresh.length === 0) {
+    return (
+      <Section className="py-12 sm:py-16">
+        <Container>
+          <div className="mb-6 flex items-center gap-3">
+            <span className="h-6 w-1.5 rounded-sm bg-[var(--color-primary)]" />
+            <h2 className="font-display text-2xl font-bold text-[var(--color-text)] sm:text-3xl">New arrivals</h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Skeleton className="aspect-[4/3] w-full rounded-lg" />
+            <Skeleton className="aspect-[4/3] w-full rounded-lg" />
+          </div>
+        </Container>
+      </Section>
+    )
+  }
+
+  if (fresh.length === 0) return null
   return (
     <Section className="py-12 sm:py-16">
       <Container>

@@ -11,7 +11,7 @@ beforeAll(async () => {
     replSet: { count: 1, storageEngine: 'wiredTiger' },
   })
   await connectDB(mongoReplSet.getUri())
-})
+}, 120000)
 
 afterEach(async () => {
   const { collections } = mongoose.connection

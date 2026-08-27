@@ -12,6 +12,66 @@ async function resolveCategoryFilter(query) {
   }
 }
 
+export const getHomepageData = asyncHandler(async (_req, res) => {
+  res.set('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300')
+
+  const cardFields = 'name slug price originalPrice images ratingAvg ratingCount tags isActive'
+
+  const [featured, deals, bestsellers, newArrivals, explore, categories] = await Promise.all([
+    Product.find({ tags: 'featured', isActive: true })
+      .select(cardFields)
+      .sort('-createdAt')
+      .limit(8)
+      .lean(),
+    Product.find({ tags: 'todays-deal', isActive: true })
+      .select(cardFields)
+      .sort('-createdAt')
+      .limit(8)
+      .lean(),
+    Product.find({ tags: 'bestseller', isActive: true })
+      .select(cardFields)
+      .sort('-ratingAvg')
+      .limit(8)
+      .lean(),
+    Product.find({ tags: 'new', isActive: true })
+      .select(cardFields)
+      .sort('-createdAt')
+      .limit(8)
+      .lean(),
+    Product.find({ isActive: true })
+      .select(cardFields)
+      .sort('-createdAt')
+      .limit(24)
+      .lean(),
+    Category.find()
+      .select('name slug image parent')
+      .sort({ name: 1 })
+      .lean(),
+  ])
+
+  const nodes = new Map(categories.map((cat) => [cat._id.toString(), { ...cat, id: String(cat._id), children: [] }]))
+  const categoryTree = []
+  for (const node of nodes.values()) {
+    const parent = node.parent ? nodes.get(node.parent.toString()) : undefined
+    if (parent) parent.children.push(node)
+    else categoryTree.push(node)
+  }
+
+  const mapIds = (docs) => docs.map((doc) => ({ ...doc, id: String(doc._id) }))
+
+  res.json({
+    success: true,
+    data: {
+      featured: mapIds(featured),
+      todaysDeals: mapIds(deals),
+      bestsellers: mapIds(bestsellers),
+      newArrivals: mapIds(newArrivals),
+      explore: mapIds(explore),
+      categories: categoryTree,
+    },
+  })
+})
+
 export const getProducts = asyncHandler(async (req, res) => {
   await resolveCategoryFilter(req.query)
   const result = await paginateQuery(Product, req.query, {

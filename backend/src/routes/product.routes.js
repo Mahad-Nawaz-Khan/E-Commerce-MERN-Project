@@ -14,6 +14,7 @@ const productRules = [
 ]
 
 router.get('/', ctrl.getProducts)
+router.get('/homepage', ctrl.getHomepageData)
 router.get('/:slug', ctrl.getProductBySlug)
 router.post('/', authenticate, authorizeRoles('admin'), validate(productRules), ctrl.createProduct)
 router.put('/:id', authenticate, authorizeRoles('admin'), validate(productRules), ctrl.updateProduct)

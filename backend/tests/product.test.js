@@ -116,4 +116,21 @@ describe('products', () => {
       },
     })
   })
+
+  it('returns bundled homepage payload with cache-control headers', async () => {
+    await seedProducts()
+
+    const response = await request(app).get('/api/products/homepage')
+
+    expect(response.status).toBe(200)
+    expect(response.headers['cache-control']).toContain('public')
+    expect(response.body.success).toBe(true)
+    expect(response.body.data).toHaveProperty('featured')
+    expect(response.body.data).toHaveProperty('todaysDeals')
+    expect(response.body.data).toHaveProperty('bestsellers')
+    expect(response.body.data).toHaveProperty('newArrivals')
+    expect(response.body.data).toHaveProperty('explore')
+    expect(response.body.data).toHaveProperty('categories')
+    expect(response.body.data.explore).toHaveLength(3)
+  })
 })

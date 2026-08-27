@@ -36,5 +36,7 @@ productSchema.virtual('comparePrice').get(function () { return this.price })
 
 productSchema.index({ name: 'text', description: 'text', brand: 'text' })
 productSchema.index({ category: 1, isActive: 1, price: 1, ratingAvg: -1 })
+productSchema.index({ tags: 1, isActive: 1, createdAt: -1 })
+productSchema.index({ isActive: 1, createdAt: -1 })
 
 export const Product = mongoose.model('Product', productSchema)

@@ -1,13 +1,35 @@
 import { Link } from 'react-router-dom'
-import { Button, Container, Price } from '../ui'
+import { Button, Container, Price, Skeleton } from '../ui'
 import { useProducts, useCountdown, useStableTarget } from '../../hooks'
 
 /** Signature hero — a featured drop on a midnight stage with a gold hairline + countdown. */
 export function HeroSection() {
-  const { featured } = useProducts()
+  const { featured, isLoading } = useProducts()
   const drop = featured[0]
   const target = useStableTarget(2 * 24 * 60 * 60 * 1000) // 2 days
   const t = useCountdown(target)
+
+  if (isLoading && !drop) {
+    return (
+      <section className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+        <Container className="grid items-center gap-8 py-12 lg:grid-cols-2 lg:py-20">
+          <div className="order-2 lg:order-1 space-y-4">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-12 w-3/4" />
+            <Skeleton className="h-5 w-1/2" />
+            <div className="flex gap-4 pt-2">
+              <Skeleton className="h-10 w-24" />
+              <Skeleton className="h-10 w-36" />
+            </div>
+          </div>
+          <div className="order-1 lg:order-2">
+            <Skeleton className="mx-auto aspect-square max-w-md w-full rounded-lg" />
+          </div>
+        </Container>
+      </section>
+    )
+  }
+
   if (!drop) return null
   return (
     <section className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
