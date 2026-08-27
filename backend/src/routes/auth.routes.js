@@ -40,5 +40,6 @@ router.get('/me', authenticate, ctrl.getMe)
 router.get('/verify-email', ctrl.verifyEmail)
 router.post('/forgot-password', authLimiter, validate([emailRule]), ctrl.forgotPassword)
 router.post('/reset-password', authLimiter, validate(resetRules), ctrl.resetPassword)
+router.post('/resend-verification', authLimiter, validate([emailRule]), ctrl.resendVerification)
 
 export { router }

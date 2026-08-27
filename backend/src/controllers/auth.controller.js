@@ -4,6 +4,7 @@ import { User } from '../models/User.js'
 import { PasswordReset } from '../models/PasswordReset.js'
 import { ApiError } from '../utils/ApiError.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
+import { logger } from '../utils/logger.js'
 import {
   signAccessToken, signRefreshToken, verifyRefreshToken, verifyEmailToken,
   hashRefreshToken, refreshCookieOptions, REFRESH_COOKIE,
@@ -22,7 +23,8 @@ export const register = asyncHandler(async (req, res) => {
   if (await User.exists({ email })) throw ApiError.conflict('Email already registered')
   // role is NEVER accepted from the client — always customer on self-register.
   const user = await User.create({ name, email, password, role: 'customer' })
-  sendVerificationEmail(user).catch((e) => console.error('[email]', e.message))
+  // Fire-and-forget — send() swallows errors internally and logs them.
+  sendVerificationEmail(user)
   res.status(201).json({ success: true, data: { message: 'Account created. Check your email to verify it before signing in.' } })
 })
 
@@ -112,7 +114,8 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     const raw = crypto.randomBytes(32).toString('hex')
     const tokenHash = await bcrypt.hash(raw, 12)
     await PasswordReset.create({ user: user._id, tokenHash, expiresAt: Date.now() + 10 * 60 * 1000 })
-    sendPasswordResetEmail(user, raw).catch((e) => console.error('[email]', e.message))
+    // Fire-and-forget — send() swallows errors internally and logs them.
+    sendPasswordResetEmail(user, raw)
   }
   res.json({ success: true, data: { message: 'If that email exists, a reset link has been sent.' } })
 })
@@ -134,4 +137,15 @@ export const resetPassword = asyncHandler(async (req, res) => {
   match.used = true
   await match.save()
   res.json({ success: true, data: { message: 'Password reset — please log in.' } })
+})
+
+export const resendVerification = asyncHandler(async (req, res) => {
+  const { email } = req.body
+  const user = await User.findOne({ email: String(email).toLowerCase() })
+  // Always 200 — don't leak which emails exist or their verification state.
+  if (user && !user.isEmailVerified) {
+    sendVerificationEmail(user)
+    logger.info({ email }, '[auth] Resent verification email')
+  }
+  res.json({ success: true, data: { message: 'If that email exists and is unverified, a new verification link has been sent.' } })
 })
